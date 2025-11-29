@@ -6,8 +6,6 @@ import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
@@ -88,51 +86,89 @@ function getWeekStart(date: Date): Date {
   return normalize(weekStart);
 }
 
+const getTransactionsWeNeed = (
+  transactions: transactionSchemaType,
+  lastDayOfTheTransaction: Date
+) => {
+  const lastDay = normalize(lastDayOfTheTransaction).getTime();
+
+  return transactions.filter((transaction) => {
+    const transactionDate = normalize(new Date(transaction.date)).getTime();
+    return transactionDate <= lastDay;
+  });
+};
+
+const getDaysIntoWeek=(today:Date)=>{
+
+  return (today.getDay()+1)%7
+}
+
+const getStartOfWeek=(today:Date)=>{
+  const daysIntoWeek=getDaysIntoWeek(today)
+  const weekStarted=new Date(today)
+  weekStarted.setDate(weekStarted.getDate()-daysIntoWeek)
+  return weekStarted
+}
+
+
+
 function getLastMonthTransaction(transactions: transactionSchemaType) {
   const weekTransactionData: { day: string; income: number; expense: number }[] = [];
 
   // normalize today to midnight
   const today = normalize(new Date());
-  const currentWeekStart = getWeekStart(today);
+  const startOfCurrentWeek = getStartOfWeek(today);
+  const daysIntoWeek = getDaysIntoWeek(today);
   
-  // Process 4 periods: this week, last week, 2 weeks ago, 3 weeks ago
-  for (let i = 0; i < 4; i++) {
-    let startDay: Date;
-    let endDay: Date;
-    let label: string;
+  // Calculate tomorrow for current week end
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
 
-    if (i === 0) {
-      // This week: from start of current week to today (inclusive)
-      startDay = currentWeekStart;
-      endDay = new Date(today);
-      endDay.setDate(endDay.getDate() + 1); // Make it exclusive for filtering
-      label = "This Week";
+  for (let i = 4; i > 0; i--) {
+    // Calculate week boundaries
+    // i=4: 3 weeks ago (oldest)
+    // i=3: 2 weeks ago
+    // i=2: 1 week ago (last week)
+    // i=1: this week (newest)
+    
+    const weeksBack = i - 1;
+    const startDay = new Date(startOfCurrentWeek);
+    startDay.setDate(startDay.getDate() - (weeksBack * 7));
+    
+    let endDay: Date;
+    if (i === 1) {
+      // This week: end is tomorrow to include today
+      endDay = tomorrow;
     } else {
-      // Previous weeks: complete weeks (Monday to Sunday)
-      const weekStart = new Date(currentWeekStart);
-      weekStart.setDate(weekStart.getDate() - i * 7);
-      const weekEnd = new Date(weekStart);
-      weekEnd.setDate(weekEnd.getDate() + 7); // End of week (exclusive)
-      
-      startDay = normalize(weekStart);
-      endDay = normalize(weekEnd);
-      
-      if (i === 1) {
-        label = "Last Week";
-      } else if (i === 2) {
-        label = "2 Weeks Ago";
-      } else {
-        label = "3 Weeks Ago";
-      }
+      // Previous weeks: end is the start of the next week
+      endDay = new Date(startDay);
+      endDay.setDate(endDay.getDate() + 7);
     }
+    // console.log("the start day",startDay,endDay)
+
+    // Normalize both
+    const normalizedStart = normalize(startDay);
+    const normalizedEnd = normalize(endDay);
+
+    console.log("RANGE:", normalizedStart, "→", normalizedEnd, `(Week ${i}, days into week: ${daysIntoWeek})`);
 
     const sameRange = transactions.filter((t) => {
-      const transactionDate = normalize(new Date(t.date));
-      return transactionDate >= startDay && transactionDate < endDay;
+      const transactionDate = normalize(new Date(t.date.split(" ")[0]));
+      return transactionDate >= normalizedStart && transactionDate < normalizedEnd;
     });
 
     const credit = sameRange.reduce((sum, t) => sum + t.credit, 0);
     const debit = sameRange.reduce((sum, t) => sum + t.debit, 0);
+    
+    // Create label
+    let label: string;
+    if (i === 1) {
+      label = "This week";
+    } else if (i === 2) {
+      label = "Last week";
+    } else {
+      label = `${getMonthAndDayName(normalizedStart)} -- ${getMonthAndDayName(new Date(normalizedEnd.getTime() - 1))}`;
+    }
     
     weekTransactionData.push({
       day: label,
@@ -143,8 +179,10 @@ function getLastMonthTransaction(transactions: transactionSchemaType) {
 
   return weekTransactionData;
 }
+
+
 export function ChartBarMultiple({transactions}:{transactions:transactionSchemaType}) {
-  const [transactionsDateType,setTransactionsDateType]=useState<'week'|'month'>('week')
+  const [transactionsDateType,setTransactionsDateType]=useState<'week'|'month'>('month')
   const lastweekTransactions=getLastWeekTransactions(transactions)
   const lastMonthTransactions=getLastMonthTransaction(transactions)
   return (

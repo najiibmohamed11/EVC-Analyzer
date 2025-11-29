@@ -1,7 +1,5 @@
 "use client"
 
-import { Sparkles, FileText, Lightbulb, ArrowUp } from "lucide-react"
-import { FloatingElement } from "@/components/floating-element"
 import { motion } from "framer-motion"
 import { ConnectedUpload } from "./connected-upload"
 import { Toaster } from "sonner"

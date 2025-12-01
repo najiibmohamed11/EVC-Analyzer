@@ -40,7 +40,7 @@ function page() {
         <ChartBarMultiple transactions={allTransactions}/>
           </main>
 
-        <ProfileSidebar/>
+        <ProfileSidebar transactions={allTransactions}/>
         </div>
       </div>
      </div>

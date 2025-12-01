@@ -42,8 +42,9 @@ function parseTransactions(text: string) {
   const regex = /(\d{11,})\s+(\d{4}-\d{2}-)\s+(\d{2})\s+(\d{2}:\d{2}:\d{2})\s+(.+?)\$([\d.]+)\$([\d.]+)\$([\d.]+)([\s\S]*?)(?=\d{11,}|$)/g
   const regexForMetaData=/Period:\s*(.+)\s*Name\s*(.+)\s*Mobile Number\s*(\d+)\s*Balance\s*([0-9.]+)/;
 
-const match = metaData.match(regexForMetaData);
-const [, period, name, mobile, balance] = match ?? []
+  const match = metaData.match(regexForMetaData);
+  const [, period, name, mobile, balance] = match ?? []
+  console.log(blocks)
   const arangedMetaData={period,name,mobile,balance}
   for (const block of blocks) {
     let match;
@@ -51,11 +52,12 @@ const [, period, name, mobile, balance] = match ?? []
       results.push({
       id: Number(match[1]),
       date: `${match[2]}${match[3]} ${match[4]}`, // YYYY-MM-DD HH:MM:SS
+      type:getTransactionType(match[5].trim()),
       otherParty: match[5].trim(),                // correct
       credit: Number(match[6]),
       debit: Number(match[7]),
       balance: Number(match[8]),
-      description: match[9].trim().replace(/\s+/g, " "),
+      description: match[9].trim(),
     });
 
     }
@@ -64,4 +66,24 @@ const [, period, name, mobile, balance] = match ?? []
   return {results,arangedMetaData};
 }
 
+const getTransactionType=(otherPart:string)=>{
+  if(otherPart.includes("Bank Acc")){
+    return "bank"
+  }
+  else if((/^\d{12}$/).test(otherPart)){
+      return "p2p"
+  }
+  else if ((/^\d{6}$/).test(otherPart)){
+    return "merchant"
+  }
+  else if(otherPart.includes("Card")){
+    return "API"
+  }
+  else if(otherPart.includes("Bundle")){
+    return "internal purchase"
+  }
+  else{
+    return "unkown"
+  }
+}
 

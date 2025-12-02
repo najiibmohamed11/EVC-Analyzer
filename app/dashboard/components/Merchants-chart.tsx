@@ -33,41 +33,37 @@ const chartData = [
 ]
 
 const chartConfig = {
-  visitors: {
+  amount: {
     label: "Visitors",
     color:"#fff"
   },
  
-  safari: {
-    label: "Safari",
-    color: "var(--chart-2)",
-  },
-  firefox: {
-    label: "Firefox",
-    color: "var(--chart-3)",
-  },
-  edge: {
-    label: "Edge",
-    color: "var(--chart-4)",
-  },
-  other: {
-    label: "Other",
-    color: "var(--chart-5)",
-  },
+
 } satisfies ChartConfig
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
 
 const getChartConfig=(transaction:transactionSchemaType)=>{
   const merchantTransactions=transaction.filter((transaction)=>transaction.type==="merchant")
   merchantTransactions.reverse()
   const groupedMerchantTransaction=merchantTransactions.reduce((accumulator,transaction)=>{
-    if(!accumulator[transaction.otherParty]){
-      accumulator[transaction.otherParty]=[]
-    }
-      accumulator[transaction.otherParty].push(transaction)
-      return accumulator;
+   const indexOfTransaction=accumulator.findIndex((trans)=>trans.merchant===transaction.otherParty)
+   if(indexOfTransaction===-1){
+    accumulator.push({merchant:transaction.otherParty,amount:transaction.debit,fill:getRandomColor()})
+    return accumulator
+   }
+   accumulator[indexOfTransaction]={merchant:transaction.otherParty,amount:accumulator[indexOfTransaction].amount+transaction.debit,fill:getRandomColor()}  
+    return accumulator;
     
-  },{}as Record<string,transactionSchemaType>)
+  },[]as {merchant:string,amount:number,fill:string}[])
   console.log(groupedMerchantTransaction)
+  return groupedMerchantTransaction
 }
 
 export default function MerchantsChart({transactions}:{transactions:transactionSchemaType}) {
@@ -87,9 +83,9 @@ export default function MerchantsChart({transactions}:{transactions:transactionS
               content={<ChartTooltipContent hideLabel />}
             />
             <Pie
-              data={chartData}
-              dataKey="visitors"
-              nameKey="browser"
+              data={chartConf}
+              dataKey="amount"
+              nameKey="merchant"
               innerRadius={60}
               strokeWidth={5}
               paddingAngle={4}
@@ -117,7 +113,7 @@ export default function MerchantsChart({transactions}:{transactions:transactionS
                           y={(viewBox.cy || 0) + 24}
                           className="fill-muted-foreground"
                         >
-                          Visitors
+                          amount
                         </tspan>
                       </text>
                     )
@@ -127,5 +123,6 @@ export default function MerchantsChart({transactions}:{transactions:transactionS
             </Pie>
           </PieChart>
         </ChartContainer>
+   
   )
 }

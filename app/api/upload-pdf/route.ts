@@ -37,9 +37,10 @@ function parseTransactions(text: string) {
   const blocks = text.split("TRANSACTION").slice(1);
   const results:transactionSchemaType = [];
   const metaData=text.split("TRANSACTION")[0]
-  const regex = /(\d{11,})\s+(\d{4}-\d{2}-)\s+(\d{2})\s+(\d{2}:\d{2}:\d{2})\s+(.+?)\$([\d.]+)\$([\d.]+)\$([\d.]+)([\s\S]*?)(?=\d{11,}|$)/g
-  const regexForMetaData=/Period:\s*(.+)\s*Name\s*(.+)\s*Mobile Number\s*(\d+)\s*Balance\s*([0-9.]+)/;
 
+  const regex = /(\d{11,})\s+(\d{4}-\d{2}-)\s+(\d{2})\s+(\d{2}:\d{2}:\d{2})\s+([\s\S]+?)\$([\d.]+)\$([\d.]+)\$([\d.]+)([\s\S]*?)(?=\n\s*\d{11,}\s+\d{4}-\d{2}-|\n\s*Total:|This is an automatically generated report\.|$)/g;
+  const regexForMetaData=/Period:\s*(.+)\s*Name\s*(.+)\s*Mobile Number\s*(\d+)\s*Balance\s*([0-9.]+)/;
+  console.log(text)
   const match = metaData.match(regexForMetaData);
   const [, period, name, mobile, balance] = match ?? []
   console.log(blocks)
@@ -57,9 +58,9 @@ function parseTransactions(text: string) {
       balance: Number(match[8]),
       description: match[9].trim(),
     });
-
-    }
   }
+}
+console.log(results)
 
   return {results,arangedMetaData};
 }

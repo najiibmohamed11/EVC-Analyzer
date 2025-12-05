@@ -18,6 +18,7 @@ import {
 import { transactionSchemaType } from "@/app/schema/transactions"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useState } from "react"
+import HeatMap from "./HeatMap"
 export const description = "A multiple bar chart"
 
 // const chartData = [
@@ -187,10 +188,10 @@ export function ChartBarMultiple({transactions}:{transactions:transactionSchemaT
   const lastweekTransactions=getLastWeekTransactions(transactions)
   const lastMonthTransactions=getLastMonthTransaction(transactions)
   return (
-    <Card className="min-w-3xl ">
-      <CardHeader className="flex flex-row items-center justify-between pb-2">
-      <CardTitle className="text-lg font-bold">Earnings</CardTitle>
-        <Tabs className="w-auto" defaultValue={transactionsDateType} value={transactionsDateType} onValueChange={(value)=>setTransactionsDateType(value as 'week'|'month')}>
+    <div className="min-w-3xl ">
+      <div className="flex justify-between w-full items-center">
+        <h2>title</h2>
+          <Tabs className="w-auto" defaultValue={transactionsDateType} value={transactionsDateType} onValueChange={(value)=>setTransactionsDateType(value as 'week'|'month')}>
           <TabsList className="bg-transparent p-0 gap-4" >
             <TabsTrigger
               value="week"
@@ -205,10 +206,8 @@ export function ChartBarMultiple({transactions}:{transactions:transactionSchemaT
             </TabsTrigger>
           </TabsList>
         </Tabs>
-    
-      </CardHeader>
-      <CardContent>
-        <ChartContainer config={chartConfig}>
+      </div>
+       {/* <ChartContainer config={chartConfig}>
           <BarChart accessibilityLayer data={transactionsDateType==="week"?lastweekTransactions:lastMonthTransactions}>
             <CartesianGrid vertical={false} />
             <XAxis
@@ -224,8 +223,8 @@ export function ChartBarMultiple({transactions}:{transactions:transactionSchemaT
             <Bar dataKey="expense" fill="var(--color-desktop)" radius={4} />
             <Bar dataKey="income" fill="var(--color-mobile)" radius={4} />
           </BarChart>
-        </ChartContainer>
-      </CardContent>
-    </Card>
+        </ChartContainer> */}
+        <HeatMap/>
+    </div>
   )
 }

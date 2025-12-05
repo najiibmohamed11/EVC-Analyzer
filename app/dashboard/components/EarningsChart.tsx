@@ -16,7 +16,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 import { transactionSchemaType } from "@/app/schema/transactions"
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useState } from "react"
 import HeatMap from "./HeatMap"
 export const description = "A multiple bar chart"
@@ -185,13 +185,21 @@ function getLastMonthTransaction(transactions: transactionSchemaType) {
 
 export function ChartBarMultiple({transactions}:{transactions:transactionSchemaType}) {
   const [transactionsDateType,setTransactionsDateType]=useState<'week'|'month'>('month')
+  const [chartType,setChartType]=useState<'Earnings'|'Activity'>('Earnings')
   const lastweekTransactions=getLastWeekTransactions(transactions)
   const lastMonthTransactions=getLastMonthTransaction(transactions)
   return (
     <div className="min-w-3xl ">
       <div className="flex justify-between w-full items-center">
-        <h2>title</h2>
-          <Tabs className="w-auto" defaultValue={transactionsDateType} value={transactionsDateType} onValueChange={(value)=>setTransactionsDateType(value as 'week'|'month')}>
+        <Tabs defaultValue={chartType} onValueChange={(value)=>setChartType(value as 'Earnings'|'Activity')} className="w-full">
+        <div className="flex justify-between">
+        <h1 className="text-2xl font-bold">{chartType==="Earnings"&&"earnings"}</h1>
+        <div className="flex justify-center items-center flex-col">
+        <TabsList>
+          <TabsTrigger value="Earnings">Earnings</TabsTrigger>
+          <TabsTrigger value="Activity">Activity</TabsTrigger>
+        </TabsList>
+    {chartType==="Earnings" && <Tabs className="w-auto" defaultValue={transactionsDateType} value={transactionsDateType} onValueChange={(value)=>setTransactionsDateType(value as 'week'|'month')}>
           <TabsList className="bg-transparent p-0 gap-4" >
             <TabsTrigger
               value="week"
@@ -205,9 +213,11 @@ export function ChartBarMultiple({transactions}:{transactions:transactionSchemaT
               Month
             </TabsTrigger>
           </TabsList>
-        </Tabs>
-      </div>
-       {/* <ChartContainer config={chartConfig}>
+        </Tabs>}
+        </div>
+        </div>
+        <TabsContent value="Earnings" >
+                 <ChartContainer config={chartConfig}>
           <BarChart accessibilityLayer data={transactionsDateType==="week"?lastweekTransactions:lastMonthTransactions}>
             <CartesianGrid vertical={false} />
             <XAxis
@@ -223,8 +233,33 @@ export function ChartBarMultiple({transactions}:{transactions:transactionSchemaT
             <Bar dataKey="expense" fill="var(--color-desktop)" radius={4} />
             <Bar dataKey="income" fill="var(--color-mobile)" radius={4} />
           </BarChart>
-        </ChartContainer> */}
+        </ChartContainer>
+        </TabsContent>
+        <TabsContent value="Activity" >
+          <Card>
+                <CardHeader className="flex flex-row items-center justify-between pb-2">
+                        <CardTitle className="text-lg font-bold">Active Days</CardTitle>
+                <div className="flex gap-2 justify-center items-center">
+                  <p>less</p>
+                  <div className="bg-[#f5f7fa] w-2 h-2"></div>
+                  <div className="bg-[#FFC0B8] w-2 h-2"></div>
+                  <div className="bg-[#FF6B58] w-2 h-2"></div>
+                  <div className="bg-[#FF462E] w-2 h-2"></div>
+                  <p>More</p>
+                </div>
+                </CardHeader>
         <HeatMap transactions={transactions}/>
+        </Card>
+        </TabsContent>
+        </Tabs>
+    
+      </div>
+
+      
     </div>
   )
 }
+
+
+
+  

@@ -32,7 +32,7 @@ const getContainerColor=(date:Date,transactions:transactionSchemaType)=>{
     const thidDateTransaction=groupedTransactions.get(formatedDate)
     const myObject = Object.fromEntries(groupedTransactions);
     console.log("mmmmmmmmmmmmmm",myObject)
-    if(!thidDateTransaction)return '#fff'
+    if(!thidDateTransaction)return '#f5f7fa '
     console.log("transaction count",thidDateTransaction?.transactionCount)
     if(thidDateTransaction.transactionCount<=2)return '#FFC0B8'
     if(thidDateTransaction.transactionCount>=5)return '#FF6B58'

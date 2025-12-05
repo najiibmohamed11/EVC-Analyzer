@@ -17,7 +17,7 @@ export function ProfileSidebar({transactions}:{transactions:transactionSchemaTyp
     },[])
 
     const generateProfileIcon=(fullName:string)=>{
-        return fullName.split(" ").map((name)=>name[0]).join("")
+        return fullName.split(" ").map((name)=>name[0]).join("").slice(0,2)
     }
   return (
     <div className="space-y-6 h-full flex flex-col">
@@ -51,25 +51,57 @@ export function ProfileSidebar({transactions}:{transactions:transactionSchemaTyp
       </Card>
 
       {/* Promo Card */}
-      <Card className="relative overflow-hidden rounded-[2.5rem] border-0 bg-gradient-to-br from-orange-400 to-red-500 text-white shadow-lg">
-        <CardContent className="p-8">
-          <div className="relative z-10 max-w-[60%]">
-            <h3 className="mb-6 text-2xl font-bold leading-tight">Do you have our mobile app?</h3>
-            <Button className="rounded-full bg-white px-6 font-bold text-orange-500 hover:bg-orange-50">
-              Download
-            </Button>
-          </div>
-          <div className="absolute -right-4 bottom-0 h-48 w-48">
-            <Image
-              src="/3d-illustration-woman-holding-phone-orange-shirt.jpg"
-              alt="Mobile app promo"
-              width={200}
-              height={200}
-              className="object-contain object-bottom"
-            />
-          </div>
-        </CardContent>
-      </Card>
+        <div className="relative flex w-full max-w-[600px] overflow-hidden rounded-[3rem] bg-gradient-to-b from-[#FF7A5F] to-[#FF6B58] p-8 sm:p-12 shadow-2xl">
+        
+        {/* Left Content Section */}
+        <div className="flex flex-1 flex-col items-start justify-center space-y-8 z-10">
+          <h2 className="text-xl font-extrabold leading-tight text-white ">
+            Do you have <br />
+            our mobile <br />
+            app?
+          </h2>
+          
+          <button 
+            type="button"
+            className="rounded-full bg-white px-10 py-3 text-lg font-bold text-[#FF6B58] shadow-sm transition-transform hover:scale-105 hover:bg-gray-50 active:scale-95"
+          >
+            Download
+          </button>
+        </div>
+
+        {/* Right Section - Avatar Wrapper 
+            Using absolute positioning to allow the character to overhang 
+            the bottom of the container slightly for depth effect.
+        */}
+        <div className="absolute bottom-[-10%] right-[-5%] h-[120%] w-[60%] flex items-end justify-end">
+           <div className={`relative h-full w-full`}>
+      {/* NOTE: I am using the cropped image from your prompt as the source.
+         Replace this src with your actual asset file.
+      */}
+      <img 
+        src="/avater.png" 
+        alt="3D character holding a phone with 'S' logo"
+        className="h-auto w-full object-contain drop-shadow-xl"
+        // Adding pointer-events-none so the overlapping image doesn't block clicks on the container behind it if needed
+        style={{ pointerEvents: 'none' }}
+      />
+    </div>
+        </div>
+        
+      </div>
     </div>
   )
 }
+
+
+const AppPromoCard = () => {
+  return (
+    // Outer Container for centering on screen (optional)
+    <Card className="flex  w-full items-center justify-center bg-gray-900 p-4">
+      
+      {/* Main Orange Card Container */}
+    
+    </Card>
+  );
+};
+

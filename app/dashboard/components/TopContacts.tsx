@@ -14,22 +14,22 @@ interface TopContactsProps {
 }
 
 const getTopContacts=(transactions:transactionSchemaType,limit:number=10)=>{
-    const toptTransaction=new Map<string,{otherPart:string,credit:number,debit:number,net:number,numberOfTransactions:number}>()
+    const toptTransaction=new Map<string,{otherParty:string,credit:number,debit:number,net:number,numberOfTransactions:number}>()
     transactions.forEach((transaction)=>{
       if(toptTransaction.has(transaction.otherParty)){
         const otherPartInfo=toptTransaction.get(transaction.otherParty)
         if(otherPartInfo===undefined)return
         const credit=otherPartInfo.credit+transaction.credit
         const debit=otherPartInfo.debit+transaction.debit
-        const otherPart=transaction.otherParty
-        const newData={otherPart,credit,debit,net:credit-debit,numberOfTransactions:otherPartInfo.numberOfTransactions+1}
+        const otherParty=transaction.otherParty
+        const newData={otherParty,credit,debit,net:credit-debit,numberOfTransactions:otherPartInfo.numberOfTransactions+1}
         toptTransaction.set(transaction.otherParty,newData)
         return
       }
          const credit=transaction.credit
         const debit=transaction.debit
-        const otherPart=transaction.otherParty
-      toptTransaction.set(transaction.otherParty,{otherPart,credit,debit,net:credit-debit,numberOfTransactions:1})
+        const otherParty=transaction.otherParty
+      toptTransaction.set(transaction.otherParty,{otherParty,credit,debit,net:credit-debit,numberOfTransactions:1})
     })
     console.log(toptTransaction)
 
@@ -73,14 +73,14 @@ export function TopContacts({ transactions }: TopContactsProps) {
         <div className="space-y-3">
           {topContacts.map((contact, index) => (
             <Link
-            href={`/dashboard/contact/${contact.otherPart}`}
-              key={contact.otherPart}
-              onClick={() => handleContactClick(contact.otherPart)}
+            href={`/dashboard/contact/${contact.otherParty}`}
+              key={contact.otherParty}
+              onClick={() => handleContactClick(contact.otherParty)}
               className="flex items-center gap-4 p-4 rounded-lg border border-slate-200 hover:border-slate-300 hover:bg-slate-50 cursor-pointer transition-all group"
             >
-            <ProfileAvatar id={contact.otherPart} size="md" pattern="rings" />
+            <ProfileAvatar id={contact.otherParty} size="md" pattern="rings" />
               <div className="flex-1 min-w-0">
-                <p className="font-semibold text-slate-900 truncate flex gap-1">{contact.otherPart}{index==0&&<Crown className="text-orange-600" />}</p>
+                <p className="font-semibold text-slate-900 truncate flex gap-1">{contact.otherParty}{index==0&&<Crown className="text-orange-600" />}</p>
                 <div className="flex items-center gap-4 mt-1">
                   <span className="text-xs text-slate-500">
                     {contact.numberOfTransactions} {contact.numberOfTransactions === 1 ? 'transaction' : 'transactions'}

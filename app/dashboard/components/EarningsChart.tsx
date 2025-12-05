@@ -224,7 +224,7 @@ export function ChartBarMultiple({transactions}:{transactions:transactionSchemaT
             <Bar dataKey="income" fill="var(--color-mobile)" radius={4} />
           </BarChart>
         </ChartContainer> */}
-        <HeatMap/>
+        <HeatMap transactions={transactions}/>
     </div>
   )
 }

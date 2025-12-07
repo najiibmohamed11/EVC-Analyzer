@@ -13,6 +13,9 @@ export function ProfileSidebar({transactions}:{transactions:transactionSchemaTyp
     const [metaData,setMetaData]=useState<metaDataType>()
     useEffect(()=>{
        const data= localStorage.getItem('metadata')
+       if(!data){
+        return
+      }
         setMetaData(JSON.parse(data??'') as metaDataType )
     },[])
 

@@ -31,9 +31,9 @@ export function ProfileSidebar({transactions}:{transactions:transactionSchemaTyp
             <div>
               <h3 className="mb-4 text-lg font-bold text-slate-900">Your profile</h3>
               <div className="flex items-center gap-4 rounded-2xl bg-white/50 p-2">
-                <Avatar className="h-12 w-12">
+                <Avatar className="h-12 w-12 ">
                   <AvatarImage src="/avatar-woman-digital-artist.jpg" />
-                  <AvatarFallback className="font-bold">{generateProfileIcon(metaData.name)}</AvatarFallback>
+                  <AvatarFallback className="font-bold bg-gradient-to-b from-[#FF7A5F] to-[#FF6B58] text-white">{generateProfileIcon(metaData.name)}</AvatarFallback>
                 </Avatar>
                 <div>
                   <div className="font-bold text-slate-900">{metaData.name}</div>

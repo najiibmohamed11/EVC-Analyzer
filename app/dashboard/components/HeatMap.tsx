@@ -63,7 +63,7 @@ function HeatMap({transactions}:{transactions:transactionSchemaType}) {
         {containers.map((date)=>
     <HoverCard>
         <HoverCardTrigger asChild>
-          <div className={`h-10`} style={{backgroundColor:getContainerColor(date,transactions)}}>{date.toLocaleDateString('en-us',{weekday:"short"})}</div></HoverCardTrigger>
+          <div className={`h-10`} style={{backgroundColor:getContainerColor(date,transactions)}}></div></HoverCardTrigger>
          <HoverCardContentComponent transactions={transactions} date={date}/>
     </HoverCard>
       )}

@@ -82,7 +82,7 @@ const getTransactionType=(otherPart:string)=>{
     return "internal purchase"
   }
   else{
-    return "unkown"
+    return "unknown"
   }
 }
 

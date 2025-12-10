@@ -1,16 +1,19 @@
-"use client"
+"use client";
 
-import { Calendar, TrendingUp, DollarSign, Activity } from "lucide-react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { transactionSchemaType } from "@/app/schema/transactions"
-import { getTransactionInsights, getMonthlyTrends } from "../utils/transactionUtils"
+import { Calendar, TrendingUp, DollarSign, Activity } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { transactionSchemaType } from "@/app/schema/transactions";
+import {
+  getTransactionInsights,
+  getMonthlyTrends,
+} from "../utils/transactionUtils";
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart"
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts"
+} from "@/components/ui/chart";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts";
 
 const chartConfig = {
   income: {
@@ -21,17 +24,23 @@ const chartConfig = {
     label: "Expenses",
     color: "hsl(0, 84%, 60%)",
   },
-} satisfies ChartConfig
+} satisfies ChartConfig;
 
-export function TransactionInsights({ transactions }: { transactions: transactionSchemaType }) {
-  const insights = getTransactionInsights(transactions)
-  const monthlyTrends = getMonthlyTrends(transactions)
+export function TransactionInsights({
+  transactions,
+}: {
+  transactions: transactionSchemaType;
+}) {
+  const insights = getTransactionInsights(transactions);
+  const monthlyTrends = getMonthlyTrends(transactions);
 
   return (
     <div className="space-y-6">
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg font-bold">Transaction Insights</CardTitle>
+          <CardTitle className="text-lg font-bold">
+            Transaction Insights
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -42,7 +51,7 @@ export function TransactionInsights({ transactions }: { transactions: transactio
               <div>
                 <p className="text-xs text-slate-500">Most Active Day</p>
                 <p className="text-sm font-semibold text-slate-900">
-                  {insights.mostActiveDay || 'N/A'}
+                  {insights.mostActiveDay || "N/A"}
                 </p>
               </div>
             </div>
@@ -54,7 +63,11 @@ export function TransactionInsights({ transactions }: { transactions: transactio
               <div>
                 <p className="text-xs text-slate-500">Avg Transaction</p>
                 <p className="text-sm font-semibold text-slate-900">
-                  ${insights.averageTransactionSize.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                  $
+                  {insights.averageTransactionSize.toLocaleString("en-US", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
                 </p>
               </div>
             </div>
@@ -67,7 +80,14 @@ export function TransactionInsights({ transactions }: { transactions: transactio
                 <div>
                   <p className="text-xs text-slate-500">Largest Transaction</p>
                   <p className="text-sm font-semibold text-slate-900">
-                    ${(insights.largestTransaction.credit + insights.largestTransaction.debit).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    $
+                    {(
+                      insights.largestTransaction.credit +
+                      insights.largestTransaction.debit
+                    ).toLocaleString("en-US", {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
                   </p>
                 </div>
               </div>
@@ -81,7 +101,14 @@ export function TransactionInsights({ transactions }: { transactions: transactio
                 <div>
                   <p className="text-xs text-slate-500">Smallest Transaction</p>
                   <p className="text-sm font-semibold text-slate-900">
-                    ${(insights.smallestTransaction.credit + insights.smallestTransaction.debit).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    $
+                    {(
+                      insights.smallestTransaction.credit +
+                      insights.smallestTransaction.debit
+                    ).toLocaleString("en-US", {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
                   </p>
                 </div>
               </div>
@@ -105,11 +132,7 @@ export function TransactionInsights({ transactions }: { transactions: transactio
                   tickMargin={10}
                   axisLine={false}
                 />
-                <YAxis
-                  tickLine={false}
-                  axisLine={false}
-                  tickMargin={10}
-                />
+                <YAxis tickLine={false} axisLine={false} tickMargin={10} />
                 <ChartTooltip
                   cursor={true}
                   content={<ChartTooltipContent indicator="dashed" />}
@@ -132,6 +155,5 @@ export function TransactionInsights({ transactions }: { transactions: transactio
         </Card>
       )}
     </div>
-  )
+  );
 }
-

@@ -1,19 +1,25 @@
-"use client"
+"use client";
 
-import { X, TrendingUp, TrendingDown, DollarSign, Calendar } from "lucide-react"
+import {
+  X,
+  TrendingUp,
+  TrendingDown,
+  DollarSign,
+  Calendar,
+} from "lucide-react";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+} from "@/components/ui/dialog";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart"
+} from "@/components/ui/chart";
 import {
   Table,
   TableBody,
@@ -21,12 +27,12 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { transactionSchemaType } from "@/app/schema/transactions"
+} from "@/components/ui/table";
+import { transactionSchemaType } from "@/app/schema/transactions";
 import {
   getContactTransactions,
   getContactStats,
-} from "../utils/transactionUtils"
+} from "../utils/transactionUtils";
 import {
   LineChart,
   Line,
@@ -41,14 +47,14 @@ import {
   YAxis,
   CartesianGrid,
   Legend,
-} from "recharts"
-import { useMemo } from "react"
+} from "recharts";
+import { useMemo } from "react";
 
 interface ContactDetailProps {
-  contactName: string | null
-  transactions: transactionSchemaType
-  open: boolean
-  onClose: () => void
+  contactName: string | null;
+  transactions: transactionSchemaType;
+  open: boolean;
+  onClose: () => void;
 }
 
 const chartConfig = {
@@ -64,9 +70,9 @@ const chartConfig = {
     label: "Balance",
     color: "hsl(217, 91%, 60%)",
   },
-} satisfies ChartConfig
+} satisfies ChartConfig;
 
-const COLORS = ['#10b981', '#ef4444', '#3b82f6', '#8b5cf6', '#f59e0b']
+const COLORS = ["#10b981", "#ef4444", "#3b82f6", "#8b5cf6", "#f59e0b"];
 
 export function ContactDetail({
   contactName,
@@ -75,107 +81,123 @@ export function ContactDetail({
   onClose,
 }: ContactDetailProps) {
   const contactTransactions = useMemo(() => {
-    if (!contactName) return []
-    return getContactTransactions(transactions, contactName)
-  }, [contactName, transactions])
+    if (!contactName) return [];
+    return getContactTransactions(transactions, contactName);
+  }, [contactName, transactions]);
 
   const stats = useMemo(() => {
-    if (!contactName) return null
-    return getContactStats(transactions, contactName)
-  }, [contactName, transactions])
+    if (!contactName) return null;
+    return getContactStats(transactions, contactName);
+  }, [contactName, transactions]);
 
   // Prepare timeline data (balance changes over time)
   const timelineData = useMemo(() => {
-    if (contactTransactions.length === 0) return []
-    
-    const sorted = [...contactTransactions].sort((a, b) => 
-      new Date(a.date).getTime() - new Date(b.date).getTime()
-    )
-    
-    let runningBalance = 0
+    if (contactTransactions.length === 0) return [];
+
+    const sorted = [...contactTransactions].sort(
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+    );
+
+    let runningBalance = 0;
     return sorted.map((t) => {
-      runningBalance += t.credit - t.debit
+      runningBalance += t.credit - t.debit;
       return {
-        date: new Date(t.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+        date: new Date(t.date).toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+        }),
         balance: runningBalance,
         credit: t.credit,
         debit: t.debit,
-      }
-    })
-  }, [contactTransactions])
+      };
+    });
+  }, [contactTransactions]);
 
   // Prepare pie chart data (credit vs debit)
   const pieData = useMemo(() => {
-    if (!stats) return []
+    if (!stats) return [];
     return [
-      { name: 'Received', value: stats.totalCredit },
-      { name: 'Sent', value: stats.totalDebit },
-    ].filter(item => item.value > 0)
-  }, [stats])
+      { name: "Received", value: stats.totalCredit },
+      { name: "Sent", value: stats.totalDebit },
+    ].filter((item) => item.value > 0);
+  }, [stats]);
 
   // Prepare frequency data (transactions by month)
   const frequencyData = useMemo(() => {
-    if (contactTransactions.length === 0) return []
-    
-    const monthlyMap = new Map<string, number>()
+    if (contactTransactions.length === 0) return [];
+
+    const monthlyMap = new Map<string, number>();
     contactTransactions.forEach((t) => {
-      const date = new Date(t.date)
-      const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`
-      monthlyMap.set(monthKey, (monthlyMap.get(monthKey) || 0) + 1)
-    })
+      const date = new Date(t.date);
+      const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+      monthlyMap.set(monthKey, (monthlyMap.get(monthKey) || 0) + 1);
+    });
 
     return Array.from(monthlyMap.entries())
       .map(([key, count]) => ({
-        month: new Date(key + '-01').toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
+        month: new Date(key + "-01").toLocaleDateString("en-US", {
+          month: "short",
+          year: "numeric",
+        }),
         count,
       }))
-      .sort((a, b) => new Date(a.month).getTime() - new Date(b.month).getTime())
-  }, [contactTransactions])
+      .sort(
+        (a, b) => new Date(a.month).getTime() - new Date(b.month).getTime(),
+      );
+  }, [contactTransactions]);
 
   // Prepare area chart data (amount flow over time)
   const areaData = useMemo(() => {
-    if (contactTransactions.length === 0) return []
-    
-    const sorted = [...contactTransactions].sort((a, b) => 
-      new Date(a.date).getTime() - new Date(b.date).getTime()
-    )
-    
-    const monthlyMap = new Map<string, { credit: number; debit: number }>()
+    if (contactTransactions.length === 0) return [];
+
+    const sorted = [...contactTransactions].sort(
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+    );
+
+    const monthlyMap = new Map<string, { credit: number; debit: number }>();
     sorted.forEach((t) => {
-      const date = new Date(t.date)
-      const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`
-      const monthLabel = date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
-      
-      const existing = monthlyMap.get(monthKey)
+      const date = new Date(t.date);
+      const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+      const monthLabel = date.toLocaleDateString("en-US", {
+        month: "short",
+        year: "numeric",
+      });
+
+      const existing = monthlyMap.get(monthKey);
       if (existing) {
-        existing.credit += t.credit
-        existing.debit += t.debit
+        existing.credit += t.credit;
+        existing.debit += t.debit;
       } else {
-        monthlyMap.set(monthKey, { credit: t.credit, debit: t.debit })
+        monthlyMap.set(monthKey, { credit: t.credit, debit: t.debit });
       }
-    })
+    });
 
     return Array.from(monthlyMap.entries())
       .map(([key, data]) => ({
-        month: new Date(key + '-01').toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
+        month: new Date(key + "-01").toLocaleDateString("en-US", {
+          month: "short",
+          year: "numeric",
+        }),
         received: data.credit,
         sent: data.debit,
       }))
-      .sort((a, b) => new Date(a.month).getTime() - new Date(b.month).getTime())
-  }, [contactTransactions])
+      .sort(
+        (a, b) => new Date(a.month).getTime() - new Date(b.month).getTime(),
+      );
+  }, [contactTransactions]);
 
   if (!contactName || !stats) {
-    return null
+    return null;
   }
 
   const getInitials = (name: string) => {
     return name
-      .split(' ')
-      .map(word => word[0])
-      .join('')
+      .split(" ")
+      .map((word) => word[0])
+      .join("")
       .toUpperCase()
-      .slice(0, 2)
-  }
+      .slice(0, 2);
+  };
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
@@ -186,9 +208,12 @@ export function ContactDetail({
               {getInitials(contactName)}
             </div>
             <div>
-              <DialogTitle className="text-2xl font-bold">{contactName}</DialogTitle>
+              <DialogTitle className="text-2xl font-bold">
+                {contactName}
+              </DialogTitle>
               <p className="text-sm text-slate-500 mt-1">
-                {stats.transactionCount} {stats.transactionCount === 1 ? 'transaction' : 'transactions'}
+                {stats.transactionCount}{" "}
+                {stats.transactionCount === 1 ? "transaction" : "transactions"}
               </p>
             </div>
           </div>
@@ -205,7 +230,11 @@ export function ContactDetail({
                 <div>
                   <p className="text-xs text-slate-500">Total Received</p>
                   <p className="text-lg font-bold text-green-600">
-                    ${stats.totalCredit.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    $
+                    {stats.totalCredit.toLocaleString("en-US", {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
                   </p>
                 </div>
               </div>
@@ -221,7 +250,11 @@ export function ContactDetail({
                 <div>
                   <p className="text-xs text-slate-500">Total Sent</p>
                   <p className="text-lg font-bold text-red-600">
-                    ${stats.totalDebit.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    $
+                    {stats.totalDebit.toLocaleString("en-US", {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
                   </p>
                 </div>
               </div>
@@ -236,8 +269,14 @@ export function ContactDetail({
                 </div>
                 <div>
                   <p className="text-xs text-slate-500">Net Amount</p>
-                  <p className={`text-lg font-bold ${stats.netAmount >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                    ${Math.abs(stats.netAmount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                  <p
+                    className={`text-lg font-bold ${stats.netAmount >= 0 ? "text-green-600" : "text-red-600"}`}
+                  >
+                    $
+                    {Math.abs(stats.netAmount).toLocaleString("en-US", {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
                   </p>
                 </div>
               </div>
@@ -253,7 +292,14 @@ export function ContactDetail({
                 <div>
                   <p className="text-xs text-slate-500">Avg Transaction</p>
                   <p className="text-lg font-bold text-slate-900">
-                    ${((stats.totalCredit + stats.totalDebit) / stats.transactionCount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    $
+                    {(
+                      (stats.totalCredit + stats.totalDebit) /
+                      stats.transactionCount
+                    ).toLocaleString("en-US", {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
                   </p>
                 </div>
               </div>
@@ -277,13 +323,18 @@ export function ContactDetail({
                       cx="50%"
                       cy="50%"
                       labelLine={false}
-                      label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                      label={({ name, percent }) =>
+                        `${name}: ${(percent * 100).toFixed(0)}%`
+                      }
                       outerRadius={80}
                       fill="#8884d8"
                       dataKey="value"
                     >
                       {pieData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                        <Cell
+                          key={`cell-${index}`}
+                          fill={COLORS[index % COLORS.length]}
+                        />
                       ))}
                     </Pie>
                     <ChartTooltip />
@@ -297,7 +348,9 @@ export function ContactDetail({
           {frequencyData.length > 0 && (
             <Card>
               <CardHeader>
-                <CardTitle className="text-base">Transaction Frequency</CardTitle>
+                <CardTitle className="text-base">
+                  Transaction Frequency
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <ChartContainer config={chartConfig}>
@@ -343,7 +396,9 @@ export function ContactDetail({
           {areaData.length > 0 && (
             <Card>
               <CardHeader>
-                <CardTitle className="text-base">Amount Flow Over Time</CardTitle>
+                <CardTitle className="text-base">
+                  Amount Flow Over Time
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <ChartContainer config={chartConfig}>
@@ -395,31 +450,41 @@ export function ContactDetail({
                 </TableHeader>
                 <TableBody>
                   {[...contactTransactions]
-                    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+                    .sort(
+                      (a, b) =>
+                        new Date(b.date).getTime() - new Date(a.date).getTime(),
+                    )
                     .map((transaction) => (
                       <TableRow key={transaction.id}>
                         <TableCell>
-                          {new Date(transaction.date).toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'short',
-                            day: 'numeric',
-                          })}
+                          {new Date(transaction.date).toLocaleDateString(
+                            "en-US",
+                            {
+                              year: "numeric",
+                              month: "short",
+                              day: "numeric",
+                            },
+                          )}
                         </TableCell>
                         <TableCell className="max-w-xs truncate">
                           {transaction.description}
                         </TableCell>
                         <TableCell className="text-right text-green-600">
                           {transaction.credit > 0
-                            ? `$${transaction.credit.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
-                            : '-'}
+                            ? `$${transaction.credit.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+                            : "-"}
                         </TableCell>
                         <TableCell className="text-right text-red-600">
                           {transaction.debit > 0
-                            ? `$${transaction.debit.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
-                            : '-'}
+                            ? `$${transaction.debit.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+                            : "-"}
                         </TableCell>
                         <TableCell className="text-right font-semibold">
-                          ${transaction.balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                          $
+                          {transaction.balance.toLocaleString("en-US", {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                          })}
                         </TableCell>
                       </TableRow>
                     ))}
@@ -430,6 +495,5 @@ export function ContactDetail({
         </Card>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
-

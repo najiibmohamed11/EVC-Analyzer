@@ -59,7 +59,7 @@ export function ProfileSidebar({transactions}:{transactions:transactionSchemaTyp
         {/* Left Content Section */}
         <div className="flex flex-1 flex-col items-start justify-center space-y-8 z-10">
           <h2 className="text-xl font-extrabold leading-tight text-white ">
-            Do you have <br />
+            Comming Soon <br />
             our mobile <br />
             app?
           </h2>
@@ -68,7 +68,7 @@ export function ProfileSidebar({transactions}:{transactions:transactionSchemaTyp
             type="button"
             className="rounded-full bg-white px-10 py-3 text-lg font-bold text-[#FF6B58] shadow-sm transition-transform hover:scale-105 hover:bg-gray-50 active:scale-95"
           >
-            Download
+            Download Soon
           </button>
         </div>
 
@@ -76,7 +76,7 @@ export function ProfileSidebar({transactions}:{transactions:transactionSchemaTyp
             Using absolute positioning to allow the character to overhang 
             the bottom of the container slightly for depth effect.
         */}
-        <div className="absolute bottom-[-10%] right-[-5%] h-[120%] w-[60%] flex items-end justify-end">
+        <div className="absolute bottom-[-15%] right-[-5%] h-[120%] w-[60%] flex items-end justify-end">
            <div className={`relative h-full w-full`}>
       {/* NOTE: I am using the cropped image from your prompt as the source.
          Replace this src with your actual asset file.

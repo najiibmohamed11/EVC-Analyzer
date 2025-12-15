@@ -1,12 +1,11 @@
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import {
   ArrowLeft,
   TrendingUp,
   TrendingDown,
-  Download,
   Filter,
   MoreHorizontal,
   Wallet,
@@ -21,7 +20,6 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -48,17 +46,14 @@ import {
   PieChart,
   Pie,
   Cell,
+  TooltipProps,
 } from "recharts";
 
 import {
   transactionSchema,
   transactionSchemaType,
 } from "@/app/schema/transactions";
-import {
-  getContactTransactions,
-  getContactStats,
-} from "../../utils/transactionUtils";
-import { statSync } from "fs";
+
 import ProfileAvatar from "../../components/ProfileAvatar";
 
 // --- Theme Colors ---
@@ -69,21 +64,19 @@ const COLORS = {
   grid: "#e2e8f0",
   text: "#64748b",
 };
-type SummaryStats = {
-  netAmount: number;
-  totalCredit: number;
-  totalDebit: number;
-  transactionCount: number;
-  averageTransactionSize: number;
-};
+
 // --- Custom Chart Components ---
 
-const CustomTooltip = ({ active, payload, label }: any) => {
+const CustomTooltip = ({
+  active,
+  payload,
+  label,
+}: TooltipProps<number, string>) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-white p-4 border border-slate-100 shadow-xl rounded-xl min-w-[200px]">
         <p className="text-sm font-medium text-slate-500 mb-2">{label}</p>
-        {payload.map((entry: any, index: number) => (
+        {payload.map((entry, index) => (
           <div
             key={index}
             className="flex items-center justify-between gap-4 mb-1"
@@ -155,7 +148,7 @@ export default function ContactDetailPage() {
   );
 
   const generateStats = () => {
-    let statistics = contactTransactions.reduce(
+    const statistics = contactTransactions.reduce(
       (acc, transaction) => {
         acc.totalCredit += transaction.credit;
         acc.totalDebit += transaction.debit;
@@ -258,9 +251,10 @@ export default function ContactDetailPage() {
                 <span className="text-sm">
                   intraacting since{" "}
                   {
-                    (contactTransactions[
-                      contactTransactions.length - 1
-                    ]?.date).split(" ")[0]
+                    (
+                      contactTransactions[contactTransactions.length - 1]
+                        ?.date ?? ""
+                    ).split(" ")[0]
                   }
                 </span>
               </div>

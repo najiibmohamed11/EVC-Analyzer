@@ -1,7 +1,6 @@
 import { transactionSchemaType } from "@/app/schema/transactions";
 import { NextRequest, NextResponse } from "next/server";
 import pdf from "pdf-parse";
-import z, { number } from "zod";
 
 export const POST = async (request: NextRequest) => {
   const form = await request.formData();

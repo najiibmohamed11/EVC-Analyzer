@@ -1,9 +1,8 @@
 "use client";
 
-import { TrendingUp } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
@@ -39,7 +38,6 @@ const formatDate = (d: Date) => d.toISOString().split("T")[0];
 const getLastWeekTransactions = (transactions: transactionSchemaType) => {
   const reversedTransactions = [...transactions];
   reversedTransactions.reverse();
-  const today = new Date();
   const weekTransactionData: {
     day: string;
     income: number;
@@ -86,28 +84,28 @@ function normalize(date: Date) {
  * @param date - The date to get the week start for
  * @returns A normalized date representing Monday of that week
  */
-function getWeekStart(date: Date): Date {
-  const normalized = normalize(date);
-  const dayOfWeek = normalized.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
-  // Calculate days to subtract to get to Monday (0 = Monday)
-  // If Sunday (0), subtract 6 days; if Monday (1), subtract 0 days; etc.
-  const daysToSubtract = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
-  const weekStart = new Date(normalized);
-  weekStart.setDate(weekStart.getDate() - daysToSubtract);
-  return normalize(weekStart);
-}
+// function getWeekStart(date: Date): Date {
+//   const normalized = normalize(date);
+//   const dayOfWeek = normalized.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+//   // Calculate days to subtract to get to Monday (0 = Monday)
+//   // If Sunday (0), subtract 6 days; if Monday (1), subtract 0 days; etc.
+//   const daysToSubtract = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+//   const weekStart = new Date(normalized);
+//   weekStart.setDate(weekStart.getDate() - daysToSubtract);
+//   return normalize(weekStart);
+// }
 
-const getTransactionsWeNeed = (
-  transactions: transactionSchemaType,
-  lastDayOfTheTransaction: Date,
-) => {
-  const lastDay = normalize(lastDayOfTheTransaction).getTime();
+// const getTransactionsWeNeed = (
+//   transactions: transactionSchemaType,
+//   lastDayOfTheTransaction: Date,
+// ) => {
+//   const lastDay = normalize(lastDayOfTheTransaction).getTime();
 
-  return transactions.filter((transaction) => {
-    const transactionDate = normalize(new Date(transaction.date)).getTime();
-    return transactionDate <= lastDay;
-  });
-};
+//   return transactions.filter((transaction) => {
+//     const transactionDate = normalize(new Date(transaction.date)).getTime();
+//     return transactionDate <= lastDay;
+//   });
+// };
 
 const getDaysIntoWeek = (today: Date) => {
   return (today.getDay() + 1) % 7;

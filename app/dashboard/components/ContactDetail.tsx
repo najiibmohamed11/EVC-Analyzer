@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  X,
-  TrendingUp,
-  TrendingDown,
-  DollarSign,
-  Calendar,
-} from "lucide-react";
+import { TrendingUp, TrendingDown, DollarSign, Calendar } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -18,7 +12,6 @@ import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
-  ChartTooltipContent,
 } from "@/components/ui/chart";
 import {
   Table,
@@ -158,10 +151,6 @@ export function ContactDetail({
     sorted.forEach((t) => {
       const date = new Date(t.date);
       const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
-      const monthLabel = date.toLocaleDateString("en-US", {
-        month: "short",
-        year: "numeric",
-      });
 
       const existing = monthlyMap.get(monthKey);
       if (existing) {

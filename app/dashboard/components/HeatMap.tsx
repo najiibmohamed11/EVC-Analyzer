@@ -4,16 +4,10 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+
 import {
   ArrowLeftRight,
   Calendar,
-  Minus,
-  Plus,
   TrendingDown,
   TrendingUp,
 } from "lucide-react";
@@ -80,14 +74,14 @@ function HeatMap({ transactions }: { transactions: transactionSchemaType }) {
 
   return (
     <div className="grid grid-cols-7 gap-1 ">
-      {daysInTheWeek.map((day) => (
-        <div className="h-5 text-center">
+      {daysInTheWeek.map((day, index) => (
+        <div key={index} className="h-5 text-center">
           {day.toLocaleDateString("en-us", { weekday: "short" })}
         </div>
       ))}
 
-      {containers.map((date) => (
-        <HoverCard>
+      {containers.map((date, index) => (
+        <HoverCard key={index}>
           <HoverCardTrigger asChild>
             <div
               className={`h-10`}

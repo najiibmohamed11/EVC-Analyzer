@@ -1,17 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { TrendingUp } from "lucide-react";
 import { Label, Pie, PieChart } from "recharts";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
@@ -19,7 +10,6 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { transactionSchemaType } from "@/app/schema/transactions";
-import { record } from "zod";
 
 export const description = "A donut chart with text";
 
@@ -38,9 +28,9 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 function getRandomColor() {
-  var letters = "0123456789ABCDEF";
-  var color = "#";
-  for (var i = 0; i < 6; i++) {
+  const letters = "0123456789ABCDEF";
+  let color = "#";
+  for (let i = 0; i < 6; i++) {
     color += letters[Math.floor(Math.random() * 16)];
   }
   return color;

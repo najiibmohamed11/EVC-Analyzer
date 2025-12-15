@@ -2,7 +2,6 @@
 
 import React from "react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { number } from "zod";
 
 const WEB3_PALETTES = [
   { from: "#FF8F71", to: "#EF2D1A" },
@@ -17,12 +16,12 @@ const WEB3_PALETTES = [
   { from: "#1ed7b5", to: "#f0c808" },
 ];
 
-const PATTERN_TYPES = ["gradient", "geometric", "rings"] as const;
+type PATTERN_TYPES = "gradient" | "geometric" | "rings";
 
 interface Web3AvatarProps {
   id: string | number; // <-- changed from address
   size?: "sm" | "md" | "lg" | "xl";
-  pattern?: (typeof PATTERN_TYPES)[number];
+  pattern?: PATTERN_TYPES[number];
 }
 
 const ProfileAvatar = ({

@@ -1,6 +1,5 @@
 /node_modules
 /.next/
-.env.local.env
-
-# Sentry Config File
 .env.sentry-build-plugin
+.env*
+.env.local

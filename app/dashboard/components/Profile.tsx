@@ -1,8 +1,5 @@
-import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { PauseCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { metaDataType } from "@/components/Upload-card";
 import { Spinner } from "@/components/ui/spinner";

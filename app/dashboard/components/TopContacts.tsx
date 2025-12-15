@@ -5,7 +5,6 @@ import { ArrowUpRight, ArrowDownRight, Crown } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { transactionSchemaType } from "@/app/schema/transactions";
 // import { getTopContacts } from "../utils/transactionUtils"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import ProfileAvatar from "./ProfileAvatar";
 
@@ -15,7 +14,7 @@ interface TopContactsProps {
 
 const getTopContacts = (
   transactions: transactionSchemaType,
-  limit: number = 10,
+  // limit: number = 10,
 ) => {
   const toptTransaction = new Map<
     string,

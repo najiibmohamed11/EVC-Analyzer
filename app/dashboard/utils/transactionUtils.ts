@@ -171,10 +171,6 @@ export function getMonthlyTrends(transactions: transactionSchemaType) {
   transactions.forEach((transaction) => {
     const date = new Date(transaction.date);
     const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
-    const monthLabel = date.toLocaleString("default", {
-      month: "short",
-      year: "numeric",
-    });
 
     const existing = monthlyMap.get(monthKey);
     if (existing) {

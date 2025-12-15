@@ -6,7 +6,6 @@ import { toast } from 'sonner'
 import { Spinner } from './ui/spinner'
 import { useRouter } from 'next/navigation'
 import { transactionSchemaType } from '@/app/schema/transactions'
-import { metadata } from '@/app/layout'
 export type metaDataType=  { 
   period: string;
   name: string;

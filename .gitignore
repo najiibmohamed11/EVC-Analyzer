@@ -2,3 +2,4 @@
 /.next/
 .env.sentry-build-plugin
 .env*
+.env.local

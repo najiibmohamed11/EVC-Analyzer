@@ -74,13 +74,13 @@ function HeatMap({ transactions }: { transactions: transactionSchemaType }) {
 
   return (
     <div className="grid grid-cols-7 gap-1 ">
-      {daysInTheWeek.map((day,index) => (
+      {daysInTheWeek.map((day, index) => (
         <div key={index} className="h-5 text-center">
           {day.toLocaleDateString("en-us", { weekday: "short" })}
         </div>
       ))}
 
-      {containers.map((date,index) => (
+      {containers.map((date, index) => (
         <HoverCard key={index}>
           <HoverCardTrigger asChild>
             <div

@@ -172,7 +172,6 @@ export function getMonthlyTrends(transactions: transactionSchemaType) {
     const date = new Date(transaction.date);
     const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
 
-
     const existing = monthlyMap.get(monthKey);
     if (existing) {
       existing.income += transaction.credit;

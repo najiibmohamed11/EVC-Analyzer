@@ -16,12 +16,12 @@ const WEB3_PALETTES = [
   { from: "#1ed7b5", to: "#f0c808" },
 ];
 
-type PATTERN_TYPES = "gradient" | "geometric" | "rings"
+type PATTERN_TYPES = "gradient" | "geometric" | "rings";
 
 interface Web3AvatarProps {
   id: string | number; // <-- changed from address
   size?: "sm" | "md" | "lg" | "xl";
-  pattern?: ( PATTERN_TYPES)[number];
+  pattern?: PATTERN_TYPES[number];
 }
 
 const ProfileAvatar = ({

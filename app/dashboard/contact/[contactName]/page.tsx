@@ -67,7 +67,11 @@ const COLORS = {
 
 // --- Custom Chart Components ---
 
-const CustomTooltip = ({ active, payload, label }:  TooltipProps<number, string>) => {
+const CustomTooltip = ({
+  active,
+  payload,
+  label,
+}: TooltipProps<number, string>) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-white p-4 border border-slate-100 shadow-xl rounded-xl min-w-[200px]">
@@ -246,10 +250,12 @@ export default function ContactDetailPage() {
                 <span>•</span>
                 <span className="text-sm">
                   intraacting since{" "}
-     {
-  (contactTransactions[contactTransactions.length - 1]?.date ?? "").split(" ")[0]
-}
-
+                  {
+                    (
+                      contactTransactions[contactTransactions.length - 1]
+                        ?.date ?? ""
+                    ).split(" ")[0]
+                  }
                 </span>
               </div>
             </div>

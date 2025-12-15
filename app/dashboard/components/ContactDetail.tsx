@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  TrendingUp,
-  TrendingDown,
-  DollarSign,
-  Calendar,
-} from "lucide-react";
+import { TrendingUp, TrendingDown, DollarSign, Calendar } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -156,7 +151,6 @@ export function ContactDetail({
     sorted.forEach((t) => {
       const date = new Date(t.date);
       const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
-
 
       const existing = monthlyMap.get(monthKey);
       if (existing) {

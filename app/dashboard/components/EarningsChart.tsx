@@ -2,7 +2,7 @@
 
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 
-import { Card,  CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,

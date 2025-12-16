@@ -1,10 +1,9 @@
-import {  transactionSchemaType } from "@/app/schema/transactions";
+import { transactionSchemaType } from "@/app/schema/transactions";
 import { NextRequest, NextResponse } from "next/server";
 import pdf from "pdf-parse";
-import { groq } from '@ai-sdk/groq';
-import { generateObject } from 'ai';
+import { groq } from "@ai-sdk/groq";
+import { generateObject } from "ai";
 import z from "zod";
-
 
 export const POST = async (request: NextRequest) => {
   const form = await request.formData();
@@ -18,14 +17,20 @@ export const POST = async (request: NextRequest) => {
     const binary = Buffer.from(await pdfFile.arrayBuffer());
     const loader = await pdf(binary);
     const stracturedPdfTxt = parseTransactionsWithRegex(loader.text);
-    if(stracturedPdfTxt.results.length===0 && stracturedPdfTxt.arangedMetaData.name){
-      const stracturedTransactions =await parseTransactionsWithAi(loader.text)
+    if (
+      stracturedPdfTxt.results.length === 0 &&
+      stracturedPdfTxt.arangedMetaData.name
+    ) {
+      const stracturedTransactions = await parseTransactionsWithAi(loader.text);
       return NextResponse.json({
-      success: true,
-      data: {results:stracturedTransactions,arangedMetaData:stracturedPdfTxt.arangedMetaData},
-      error: "",
-      details: "",
-    });
+        success: true,
+        data: {
+          results: stracturedTransactions,
+          arangedMetaData: stracturedPdfTxt.arangedMetaData,
+        },
+        error: "",
+        details: "",
+      });
     }
 
     return NextResponse.json({
@@ -91,15 +96,14 @@ const getTransactionType = (otherPart: string) => {
   }
 };
 
-const parseTransactionsWithAi=async(text:string)=>{
-  console.log("ai function runed")
+const parseTransactionsWithAi = async (text: string) => {
+  console.log("ai function runed");
   const blocks = text.split("TRANSACTION").slice(1);
 
-
-const results = await generateObject({
-  model: groq('openai/gpt-oss-120b'),
-  output:"array",
-  schema:  z.object({
+  const results = await generateObject({
+    model: groq("openai/gpt-oss-120b"),
+    output: "array",
+    schema: z.object({
       id: z.number(),
       date: z.string(), // YYYY-MM-DD HH:MM:SS
       type: z.enum([
@@ -116,10 +120,10 @@ const results = await generateObject({
       balance: z.number(),
       description: z.string(),
     }),
-  prompt: `convert this text into stractured schema ${blocks.join("")}`,
-});
+    prompt: `convert this text into stractured schema ${blocks.join("")}`,
+  });
 
-console.log(JSON.stringify(results.object, null, 2));
-console.log(results)
-return results.object
-}
+  console.log(JSON.stringify(results.object, null, 2));
+  console.log(results);
+  return results.object;
+};

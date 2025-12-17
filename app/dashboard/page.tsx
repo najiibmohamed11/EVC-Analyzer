@@ -28,10 +28,10 @@ function page() {
     setAllTransactions(JSON.parse(transactions) as transactionSchemaType);
   }, []);
   if (allTransactions === null) {
-    return <DashboardSkeleton/>;
+    return <DashboardSkeleton />;
   }
   if (allTransactions === undefined) {
-    return <EmptyState/>;
+    return <EmptyState />;
   }
 
   return (

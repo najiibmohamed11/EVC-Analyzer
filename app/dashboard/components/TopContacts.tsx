@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { ArrowUpRight, ArrowDownRight, Crown } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { transactionSchemaType } from "@/app/schema/transactions";
@@ -65,10 +64,7 @@ const getTopContacts = (
   return topContacts;
 };
 export function TopContacts({ transactions }: TopContactsProps) {
-  const router = useRouter();
   const topContacts = getTopContacts(transactions, 5);
-
- 
 
   if (topContacts.length === 0) {
     return (

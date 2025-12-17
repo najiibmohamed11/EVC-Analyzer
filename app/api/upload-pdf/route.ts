@@ -137,6 +137,5 @@ const parseTransactionsWithAi = async (text: string) => {
     prompt: `convert this text into stractured schema ${blocks.join("")}`,
   });
 
-  
   return results.object;
 };

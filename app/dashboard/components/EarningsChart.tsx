@@ -127,7 +127,6 @@ function getLastMonthTransaction(transactions: transactionSchemaType) {
   // normalize today to midnight
   const today = normalize(new Date());
   const startOfCurrentWeek = getStartOfWeek(today);
-  const daysIntoWeek = getDaysIntoWeek(today);
 
   // Calculate tomorrow for current week end
   const tomorrow = new Date(today);
@@ -157,7 +156,6 @@ function getLastMonthTransaction(transactions: transactionSchemaType) {
     // Normalize both
     const normalizedStart = normalize(startDay);
     const normalizedEnd = normalize(endDay);
-
 
     const sameRange = transactions.filter((t) => {
       const transactionDate = normalize(new Date(t.date.split(" ")[0]));

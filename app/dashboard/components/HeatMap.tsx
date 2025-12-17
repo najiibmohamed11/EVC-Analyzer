@@ -47,7 +47,6 @@ const getContainerColor = (date: Date, transactions: transactionSchemaType) => {
   const groupedTransactions = groupTransactions(transactions);
   const formatedDate = date.toISOString().split("T")[0];
   const thidDateTransaction = groupedTransactions.get(formatedDate);
-  const myObject = Object.fromEntries(groupedTransactions);
   if (!thidDateTransaction) return "#f5f7fa ";
   if (thidDateTransaction.transactionCount <= 2) {
     return "#FFC0B8";

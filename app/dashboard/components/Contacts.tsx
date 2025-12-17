@@ -66,7 +66,6 @@ const getContacts = (
   return Contacts;
 };
 export function Contacts({ transactions }: ContactsProps) {
-  const router = useRouter();
   const [search, setSearch] = useState("");
   const allContacts = getContacts(transactions);
   const contacts = search
@@ -74,10 +73,6 @@ export function Contacts({ transactions }: ContactsProps) {
         contact.otherParty.toLowerCase().includes(search.toLocaleLowerCase()),
       )
     : allContacts;
-  const handleContactClick = (contactName: string) => {
-    const encodedName = encodeURIComponent(contactName);
-    router.push(`/dashboard/contact/${encodedName}`);
-  };
 
   if (allContacts.length === 0) {
     return (

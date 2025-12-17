@@ -74,7 +74,6 @@ const getChartConfig = (transaction: transactionSchemaType) => {
       ownerName: string;
     }[],
   );
-  console.log(groupedMerchantTransaction);
   groupedMerchantTransaction.sort((a, b) => b.amount - a.amount);
   return groupedMerchantTransaction;
 };

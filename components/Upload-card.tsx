@@ -62,8 +62,6 @@ function UploadCard() {
 
           if (result.success) {
             toast.success("PDF uploaded and parsed successfully")
-            console.log("---- PDF TEXT ----")
-            console.log(result.data.arangedMetaData)
             localStorage.setItem("transactions",JSON.stringify(result.data.results))
             localStorage.setItem("metadata",JSON.stringify(result.data.arangedMetaData))
             navigator.push("/dashboard")

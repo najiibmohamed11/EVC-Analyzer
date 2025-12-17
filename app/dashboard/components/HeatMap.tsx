@@ -46,13 +46,9 @@ const groupTransactions = (transactions: transactionSchemaType) => {
 const getContainerColor = (date: Date, transactions: transactionSchemaType) => {
   const groupedTransactions = groupTransactions(transactions);
   const formatedDate = date.toISOString().split("T")[0];
-  console.log("grouped///////////");
-  console.log(groupedTransactions);
   const thidDateTransaction = groupedTransactions.get(formatedDate);
   const myObject = Object.fromEntries(groupedTransactions);
-  console.log("mmmmmmmmmmmmmm", myObject);
   if (!thidDateTransaction) return "#f5f7fa ";
-  console.log("transaction count", thidDateTransaction?.transactionCount);
   if (thidDateTransaction.transactionCount <= 2) {
     return "#FFC0B8";
   } else if (thidDateTransaction.transactionCount <= 5) {

@@ -54,7 +54,6 @@ const getTopContacts = (
       numberOfTransactions: 1,
     });
   });
-  console.log(toptTransaction);
 
   const topContacts = [...toptTransaction.values()];
   topContacts.sort((a, b) => {

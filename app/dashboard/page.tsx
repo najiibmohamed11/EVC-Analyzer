@@ -19,8 +19,6 @@ function page() {
       return;
     }
     const result = transactionSchema.safeParse(JSON.parse(transactions));
-    console.log("helllllllllllllllllllllllllllllll");
-    console.log(result);
     if (!result.success) {
       setAllTransactions(undefined);
       return;
@@ -33,7 +31,6 @@ function page() {
   if (allTransactions === undefined) {
     return <div>no transaction fund</div>;
   }
-  console.log("transactions", allTransactions);
 
   return (
     <div className="min-h-screen bg-slate-50 p-4 md:p-8 font-sans">

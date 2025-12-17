@@ -55,7 +55,6 @@ export const POST = async (request: NextRequest) => {
 };
 
 function parseTransactionsWithRegex(text: string) {
-  console.log(text);
   const blocks = text.split("TRANSACTION").slice(1);
   const results: transactionSchemaType = [];
   const metaData = text.split("TRANSACTION")[0];
@@ -113,7 +112,6 @@ const getTransactionType = (otherPart: string) => {
 };
 
 const parseTransactionsWithAi = async (text: string) => {
-  console.log("ai function runed");
   const blocks = text.split("TRANSACTION").slice(1);
 
   const results = await generateObject({
@@ -139,7 +137,6 @@ const parseTransactionsWithAi = async (text: string) => {
     prompt: `convert this text into stractured schema ${blocks.join("")}`,
   });
 
-  // console.log(JSON.stringify(results.object, null, 2));
-  // console.log(results)
+  
   return results.object;
 };

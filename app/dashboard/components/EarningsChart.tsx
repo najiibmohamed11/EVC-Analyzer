@@ -66,7 +66,6 @@ const getLastWeekTransactions = (transactions: transactionSchemaType) => {
       income: credit,
       expense: debit,
     });
-    console.log("sameDateTransactions", sameDateTransactions, thisDate);
   }
   return weekTransactionData;
 };
@@ -124,7 +123,6 @@ function getLastMonthTransaction(transactions: transactionSchemaType) {
     income: number;
     expense: number;
   }[] = [];
-  console.log(transactions);
 
   // normalize today to midnight
   const today = normalize(new Date());
@@ -155,19 +153,11 @@ function getLastMonthTransaction(transactions: transactionSchemaType) {
       endDay = new Date(startDay);
       endDay.setDate(endDay.getDate() + 7);
     }
-    // console.log("the start day",startDay,endDay)
 
     // Normalize both
     const normalizedStart = normalize(startDay);
     const normalizedEnd = normalize(endDay);
 
-    console.log(
-      "RANGE:",
-      normalizedStart,
-      "→",
-      normalizedEnd,
-      `(Week ${i}, days into week: ${daysIntoWeek})`,
-    );
 
     const sameRange = transactions.filter((t) => {
       const transactionDate = normalize(new Date(t.date.split(" ")[0]));

@@ -68,10 +68,7 @@ export function TopContacts({ transactions }: TopContactsProps) {
   const router = useRouter();
   const topContacts = getTopContacts(transactions, 5);
 
-  const handleContactClick = (contactName: string) => {
-    const encodedName = encodeURIComponent(contactName);
-    router.push(`/dashboard/contact/${encodedName}`);
-  };
+ 
 
   if (topContacts.length === 0) {
     return (
@@ -99,7 +96,6 @@ export function TopContacts({ transactions }: TopContactsProps) {
             <Link
               href={`/dashboard/contact/${contact.otherParty}`}
               key={contact.otherParty}
-              onClick={() => handleContactClick(contact.otherParty)}
               className="flex items-center gap-4 p-4 rounded-lg border border-slate-200 hover:border-slate-300 hover:bg-slate-50 cursor-pointer transition-all group"
             >
               <ProfileAvatar

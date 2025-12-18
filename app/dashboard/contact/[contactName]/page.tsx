@@ -74,23 +74,23 @@ const CustomTooltip = ({
 }: TooltipProps<number, string>) => {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-white p-4 border border-slate-100 shadow-xl rounded-xl min-w-[200px]">
-        <p className="text-sm font-medium text-slate-500 mb-2">{label}</p>
+      <div className="min-w-[200px] rounded-xl border border-slate-100 bg-white p-4 shadow-xl">
+        <p className="mb-2 text-sm font-medium text-slate-500">{label}</p>
         {payload.map((entry, index) => (
           <div
             key={index}
-            className="flex items-center justify-between gap-4 mb-1"
+            className="mb-1 flex items-center justify-between gap-4"
           >
             <div className="flex items-center gap-2">
               <div
-                className="w-2 h-2 rounded-full"
+                className="h-2 w-2 rounded-full"
                 style={{ backgroundColor: entry.color }}
               />
               <span className="text-sm font-medium text-slate-700 capitalize">
                 {entry.name}
               </span>
             </div>
-            <span className="text-sm font-bold font-mono">
+            <span className="font-mono text-sm font-bold">
               ${entry.value.toLocaleString()}
             </span>
           </div>
@@ -125,19 +125,19 @@ export default function ContactDetailPage() {
 
   if (loading)
     return (
-      <div className="h-screen flex items-center justify-center bg-slate-50">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-slate-900" />
+      <div className="flex h-screen items-center justify-center bg-slate-50">
+        <div className="h-8 w-8 animate-spin rounded-full border-b-2 border-slate-900" />
       </div>
     );
   if (!contactName)
     return (
-      <div className="h-screen flex items-center justify-center bg-slate-50">
+      <div className="flex h-screen items-center justify-center bg-slate-50">
         opps wrong place!
       </div>
     );
   if (!transactions)
     return (
-      <div className="h-screen flex items-center justify-center bg-slate-50">
+      <div className="flex h-screen items-center justify-center bg-slate-50">
         no transactions
       </div>
     );
@@ -209,7 +209,7 @@ export default function ContactDetailPage() {
 
   if (!stats || !contactName)
     return (
-      <div className="h-screen flex flex-col items-center justify-center gap-4 bg-slate-50">
+      <div className="flex h-screen flex-col items-center justify-center gap-4 bg-slate-50">
         <p className="text-slate-500">Contact not found</p>
         <Button variant="outline" onClick={() => router.back()}>
           Go Back
@@ -218,32 +218,32 @@ export default function ContactDetailPage() {
     );
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] p-4 sm:p-8 font-sans text-slate-900">
-      <div className="max-w-6xl mx-auto space-y-8">
+    <div className="min-h-screen bg-[#F8FAFC] p-4 font-sans text-slate-900 sm:p-8">
+      <div className="mx-auto max-w-6xl space-y-8">
         {/* Top Navigation */}
         <div className="flex items-center justify-between">
           <Button
             variant="ghost"
-            className="text-slate-500 hover:text-slate-900 -ml-4"
+            className="-ml-4 text-slate-500 hover:text-slate-900"
             onClick={() => router.push("/dashboard")}
           >
-            <ArrowLeft className="h-4 w-4 mr-2" />
+            <ArrowLeft className="mr-2 h-4 w-4" />
             Dashboard
           </Button>
         </div>
 
         {/* Header Profile Section */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-center">
           <div className="flex items-center gap-5">
             <ProfileAvatar id={contactName} size="lg" />
             <div>
               <h1 className="text-3xl font-bold tracking-tight text-slate-900">
                 {contactName}
               </h1>
-              <div className="flex items-center gap-2 mt-1 text-slate-500">
+              <div className="mt-1 flex items-center gap-2 text-slate-500">
                 <Badge
                   variant="secondary"
-                  className="font-normal bg-slate-100 text-slate-600"
+                  className="bg-slate-100 font-normal text-slate-600"
                 >
                   {stats.transactionCount} Transactions
                 </Badge>
@@ -262,7 +262,7 @@ export default function ContactDetailPage() {
           </div>
 
           <div className="flex flex-col items-start md:items-end">
-            <p className="text-sm font-medium text-slate-500 mb-1">
+            <p className="mb-1 text-sm font-medium text-slate-500">
               Net Balance
             </p>
             <div
@@ -277,66 +277,66 @@ export default function ContactDetailPage() {
         </div>
 
         {/* KPI Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Card className="border-none shadow-sm ring-1 ring-slate-900/5 bg-white">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          <Card className="border-none bg-white shadow-sm ring-1 ring-slate-900/5">
             <CardContent className="p-6">
-              <div className="flex items-center justify-between mb-4">
-                <div className="p-2 bg-emerald-50 rounded-lg text-emerald-600">
+              <div className="mb-4 flex items-center justify-between">
+                <div className="rounded-lg bg-emerald-50 p-2 text-emerald-600">
                   <TrendingUp className="h-5 w-5" />
                 </div>
                 <Badge
                   variant="outline"
-                  className="text-emerald-600 bg-emerald-50 border-emerald-100"
+                  className="border-emerald-100 bg-emerald-50 text-emerald-600"
                 >
                   Income
                 </Badge>
               </div>
-              <p className="text-sm text-slate-500 font-medium">
+              <p className="text-sm font-medium text-slate-500">
                 Total Received
               </p>
-              <h3 className="text-2xl font-bold text-slate-900 mt-1">
+              <h3 className="mt-1 text-2xl font-bold text-slate-900">
                 ${stats.totalCredit.toLocaleString()}
               </h3>
             </CardContent>
           </Card>
 
-          <Card className="border-none shadow-sm ring-1 ring-slate-900/5 bg-white">
+          <Card className="border-none bg-white shadow-sm ring-1 ring-slate-900/5">
             <CardContent className="p-6">
-              <div className="flex items-center justify-between mb-4">
-                <div className="p-2 bg-rose-50 rounded-lg text-rose-600">
+              <div className="mb-4 flex items-center justify-between">
+                <div className="rounded-lg bg-rose-50 p-2 text-rose-600">
                   <TrendingDown className="h-5 w-5" />
                 </div>
                 <Badge
                   variant="outline"
-                  className="text-rose-600 bg-rose-50 border-rose-100"
+                  className="border-rose-100 bg-rose-50 text-rose-600"
                 >
                   Expense
                 </Badge>
               </div>
-              <p className="text-sm text-slate-500 font-medium">Total Sent</p>
-              <h3 className="text-2xl font-bold text-slate-900 mt-1">
+              <p className="text-sm font-medium text-slate-500">Total Sent</p>
+              <h3 className="mt-1 text-2xl font-bold text-slate-900">
                 ${stats.totalDebit.toLocaleString()}
               </h3>
             </CardContent>
           </Card>
 
-          <Card className="border-none shadow-sm ring-1 ring-slate-900/5 bg-white">
+          <Card className="border-none bg-white shadow-sm ring-1 ring-slate-900/5">
             <CardContent className="p-6">
-              <div className="flex items-center justify-between mb-4">
-                <div className="p-2 bg-blue-50 rounded-lg text-blue-600">
+              <div className="mb-4 flex items-center justify-between">
+                <div className="rounded-lg bg-blue-50 p-2 text-blue-600">
                   <Wallet className="h-5 w-5" />
                 </div>
                 <Badge
                   variant="outline"
-                  className="text-blue-600 bg-blue-50 border-blue-100"
+                  className="border-blue-100 bg-blue-50 text-blue-600"
                 >
                   Avg
                 </Badge>
               </div>
-              <p className="text-sm text-slate-500 font-medium">
+              <p className="text-sm font-medium text-slate-500">
                 Avg Transaction
               </p>
-              <h3 className="text-2xl font-bold text-slate-900 mt-1">
+              <h3 className="mt-1 text-2xl font-bold text-slate-900">
                 $
                 {(
                   (stats.totalCredit + stats.totalDebit) /
@@ -348,9 +348,9 @@ export default function ContactDetailPage() {
         </div>
 
         {/* Main Charts Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           {/* Large Area Chart */}
-          <Card className="lg:col-span-2 border-none shadow-sm ring-1 ring-slate-900/5">
+          <Card className="border-none shadow-sm ring-1 ring-slate-900/5 lg:col-span-2">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <div>
                 <CardTitle className="text-lg font-semibold text-slate-900">
@@ -360,7 +360,7 @@ export default function ContactDetailPage() {
               </div>
             </CardHeader>
             <CardContent>
-              <div className="h-[300px] w-full mt-4">
+              <div className="mt-4 h-[300px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart
                     data={chartData}
@@ -457,7 +457,7 @@ export default function ContactDetailPage() {
               <CardDescription>Total Volume Distribution</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col items-center justify-center">
-              <div className="h-[200px] w-full relative">
+              <div className="relative h-[200px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
                     <Pie
@@ -491,9 +491,9 @@ export default function ContactDetailPage() {
                   </PieChart>
                 </ResponsiveContainer>
                 {/* Center Text */}
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
                   <div className="text-center">
-                    <span className="text-xs text-slate-400 block">
+                    <span className="block text-xs text-slate-400">
                       Total Vol
                     </span>
                     <span className="text-lg font-bold text-slate-700">
@@ -506,10 +506,10 @@ export default function ContactDetailPage() {
                   </div>
                 </div>
               </div>
-              <div className="w-full space-y-3 mt-4">
+              <div className="mt-4 w-full space-y-3">
                 <div className="flex items-center justify-between text-sm">
                   <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full bg-emerald-500" />
+                    <div className="h-3 w-3 rounded-full bg-emerald-500" />
                     <span className="text-slate-600">Incoming</span>
                   </div>
                   <span className="font-semibold text-slate-900">
@@ -518,7 +518,7 @@ export default function ContactDetailPage() {
                 </div>
                 <div className="flex items-center justify-between text-sm">
                   <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full bg-rose-500" />
+                    <div className="h-3 w-3 rounded-full bg-rose-500" />
                     <span className="text-slate-600">Outgoing</span>
                   </div>
                   <span className="font-semibold text-slate-900">
@@ -531,8 +531,8 @@ export default function ContactDetailPage() {
         </div>
 
         {/* Detailed Transactions Table */}
-        <Card className="border-none shadow-sm ring-1 ring-slate-900/5 overflow-hidden">
-          <CardHeader className="bg-white flex flex-row items-center justify-between">
+        <Card className="overflow-hidden border-none shadow-sm ring-1 ring-slate-900/5">
+          <CardHeader className="flex flex-row items-center justify-between bg-white">
             <div>
               <CardTitle className="text-lg font-semibold text-slate-900">
                 Transaction History
@@ -543,7 +543,7 @@ export default function ContactDetailPage() {
             </div>
             <div className="flex gap-2">
               <Button variant="outline" size="sm">
-                <Filter className="w-4 h-4 mr-2" /> Filter
+                <Filter className="mr-2 h-4 w-4" /> Filter
               </Button>
             </div>
           </CardHeader>
@@ -578,7 +578,7 @@ export default function ContactDetailPage() {
                         </TableCell>
                         <TableCell>
                           <div className="flex flex-col">
-                            <span className="text-slate-900 font-medium truncate max-w-[300px]">
+                            <span className="max-w-[300px] truncate font-medium text-slate-900">
                               {t.description}
                             </span>
                             <span className="text-xs text-slate-500">

@@ -54,19 +54,19 @@ export function SummaryCards({
         return (
           <Card
             key={index}
-            className="overflow-hidden border-slate-200 shadow-sm hover:shadow-md transition-shadow"
+            className="overflow-hidden border-slate-200 shadow-sm transition-shadow hover:shadow-md"
           >
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-slate-600 mb-1">
+                  <p className="mb-1 text-sm font-medium text-slate-600">
                     {card.title}
                   </p>
                   <p className="text-2xl font-bold text-slate-900">
                     {card.value}
                   </p>
                 </div>
-                <div className={`${card.bgColor} ${card.color} p-3 rounded-lg`}>
+                <div className={`${card.bgColor} ${card.color} rounded-lg p-3`}>
                   <Icon className="h-6 w-6" />
                 </div>
               </div>

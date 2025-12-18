@@ -190,17 +190,17 @@ export function ContactDetail({
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-h-[90vh] max-w-6xl overflow-y-auto">
         <DialogHeader>
           <div className="flex items-center gap-4">
-            <div className="bg-blue-100 text-blue-700 w-16 h-16 rounded-full flex items-center justify-center font-semibold text-xl">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-blue-100 text-xl font-semibold text-blue-700">
               {getInitials(contactName)}
             </div>
             <div>
               <DialogTitle className="text-2xl font-bold">
                 {contactName}
               </DialogTitle>
-              <p className="text-sm text-slate-500 mt-1">
+              <p className="mt-1 text-sm text-slate-500">
                 {stats.transactionCount}{" "}
                 {stats.transactionCount === 1 ? "transaction" : "transactions"}
               </p>
@@ -209,11 +209,11 @@ export function ContactDetail({
         </DialogHeader>
 
         {/* Summary Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-6">
+        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-4">
           <Card>
             <CardContent className="p-4">
               <div className="flex items-center gap-3">
-                <div className="bg-green-50 text-green-600 p-2 rounded-lg">
+                <div className="rounded-lg bg-green-50 p-2 text-green-600">
                   <TrendingUp className="h-5 w-5" />
                 </div>
                 <div>
@@ -233,7 +233,7 @@ export function ContactDetail({
           <Card>
             <CardContent className="p-4">
               <div className="flex items-center gap-3">
-                <div className="bg-red-50 text-red-600 p-2 rounded-lg">
+                <div className="rounded-lg bg-red-50 p-2 text-red-600">
                   <TrendingDown className="h-5 w-5" />
                 </div>
                 <div>
@@ -253,7 +253,7 @@ export function ContactDetail({
           <Card>
             <CardContent className="p-4">
               <div className="flex items-center gap-3">
-                <div className="bg-blue-50 text-blue-600 p-2 rounded-lg">
+                <div className="rounded-lg bg-blue-50 p-2 text-blue-600">
                   <DollarSign className="h-5 w-5" />
                 </div>
                 <div>
@@ -275,7 +275,7 @@ export function ContactDetail({
           <Card>
             <CardContent className="p-4">
               <div className="flex items-center gap-3">
-                <div className="bg-purple-50 text-purple-600 p-2 rounded-lg">
+                <div className="rounded-lg bg-purple-50 p-2 text-purple-600">
                   <Calendar className="h-5 w-5" />
                 </div>
                 <div>
@@ -297,7 +297,7 @@ export function ContactDetail({
         </div>
 
         {/* Charts Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+        <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
           {/* Pie Chart - Credit vs Debit */}
           {pieData.length > 0 && (
             <Card>

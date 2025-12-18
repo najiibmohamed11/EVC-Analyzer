@@ -90,8 +90,8 @@ export default function MerchantsChart({
   }, []);
 
   return (
-    <div className="flex items-center flex-col gap-4 j">
-      <ChartContainer config={chartConfig} className="w-[180px] h-[180px] ">
+    <div className="j flex flex-col items-center gap-4">
+      <ChartContainer config={chartConfig} className="h-[180px] w-[180px]">
         <PieChart>
           <ChartTooltip
             cursor={false}
@@ -138,12 +138,12 @@ export default function MerchantsChart({
           </Pie>
         </PieChart>
       </ChartContainer>
-      <div className="flex flex-col gap-2 w-full">
+      <div className="flex w-full flex-col gap-2">
         {chartConf.map((chart) => (
-          <div className="flex items-center w-full gap-3" key={chart.merchant}>
+          <div className="flex w-full items-center gap-3" key={chart.merchant}>
             {/* Color Square */}
             <div
-              className="w-4 h-4 rounded-xl"
+              className="h-4 w-4 rounded-xl"
               style={{ backgroundColor: chart.fill }}
             />
 

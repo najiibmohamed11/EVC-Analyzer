@@ -43,9 +43,9 @@ export function TransactionInsights({
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="flex items-center gap-3 p-4 rounded-lg bg-slate-50">
-              <div className="bg-blue-50 text-blue-600 p-2 rounded-lg">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <div className="flex items-center gap-3 rounded-lg bg-slate-50 p-4">
+              <div className="rounded-lg bg-blue-50 p-2 text-blue-600">
                 <Calendar className="h-5 w-5" />
               </div>
               <div>
@@ -56,8 +56,8 @@ export function TransactionInsights({
               </div>
             </div>
 
-            <div className="flex items-center gap-3 p-4 rounded-lg bg-slate-50">
-              <div className="bg-green-50 text-green-600 p-2 rounded-lg">
+            <div className="flex items-center gap-3 rounded-lg bg-slate-50 p-4">
+              <div className="rounded-lg bg-green-50 p-2 text-green-600">
                 <DollarSign className="h-5 w-5" />
               </div>
               <div>
@@ -73,8 +73,8 @@ export function TransactionInsights({
             </div>
 
             {insights.largestTransaction && (
-              <div className="flex items-center gap-3 p-4 rounded-lg bg-slate-50">
-                <div className="bg-purple-50 text-purple-600 p-2 rounded-lg">
+              <div className="flex items-center gap-3 rounded-lg bg-slate-50 p-4">
+                <div className="rounded-lg bg-purple-50 p-2 text-purple-600">
                   <TrendingUp className="h-5 w-5" />
                 </div>
                 <div>
@@ -94,8 +94,8 @@ export function TransactionInsights({
             )}
 
             {insights.smallestTransaction && (
-              <div className="flex items-center gap-3 p-4 rounded-lg bg-slate-50">
-                <div className="bg-orange-50 text-orange-600 p-2 rounded-lg">
+              <div className="flex items-center gap-3 rounded-lg bg-slate-50 p-4">
+                <div className="rounded-lg bg-orange-50 p-2 text-orange-600">
                   <Activity className="h-5 w-5" />
                 </div>
                 <div>

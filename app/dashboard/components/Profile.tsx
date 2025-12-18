@@ -28,10 +28,10 @@ export function ProfileSidebar({
       .slice(0, 2);
   };
   return (
-    <div className="space-y-6 h-full flex flex-col">
+    <div className="flex h-full flex-col space-y-6">
       {/* Profile & Status Card */}
       <Card className="flex-1 rounded-[2.5rem] border-0 from-white to-red-50/50 shadow-sm">
-        <CardContent className="p-8 flex flex-col h-full">
+        <CardContent className="flex h-full flex-col p-8">
           {!metaData ? (
             <Spinner />
           ) : (
@@ -41,9 +41,9 @@ export function ProfileSidebar({
                   Your profile
                 </h3>
                 <div className="flex items-center gap-4 rounded-2xl bg-white/50 p-2">
-                  <Avatar className="h-12 w-12 ">
+                  <Avatar className="h-12 w-12">
                     <AvatarImage src="/avatar-woman-digital-artist.jpg" />
-                    <AvatarFallback className="font-bold bg-gradient-to-b from-[#FF7A5F] to-[#FF6B58] text-white">
+                    <AvatarFallback className="bg-gradient-to-b from-[#FF7A5F] to-[#FF6B58] font-bold text-white">
                       {generateProfileIcon(metaData.name)}
                     </AvatarFallback>
                   </Avatar>
@@ -71,10 +71,10 @@ export function ProfileSidebar({
       </Card>
 
       {/* Promo Card */}
-      <div className="relative flex w-full max-w-[600px] overflow-hidden rounded-[3rem] bg-gradient-to-b from-[#FF7A5F] to-[#FF6B58] p-8 sm:p-12 shadow-2xl">
+      <div className="relative flex w-full max-w-[600px] overflow-hidden rounded-[3rem] bg-gradient-to-b from-[#FF7A5F] to-[#FF6B58] p-8 shadow-2xl sm:p-12">
         {/* Left Content Section */}
-        <div className="flex flex-1 flex-col items-start justify-center space-y-8 z-10">
-          <h2 className="text-xl font-extrabold leading-tight text-white ">
+        <div className="z-10 flex flex-1 flex-col items-start justify-center space-y-8">
+          <h2 className="text-xl leading-tight font-extrabold text-white">
             Comming Soon <br />
             our mobile <br />
             app?
@@ -92,7 +92,7 @@ export function ProfileSidebar({
             Using absolute positioning to allow the character to overhang 
             the bottom of the container slightly for depth effect.
         */}
-        <div className="absolute bottom-[-15%] right-[-5%] h-[120%] w-[60%] flex items-end justify-end">
+        <div className="absolute right-[-5%] bottom-[-15%] flex h-[120%] w-[60%] items-end justify-end">
           <div className={`relative h-full w-full`}>
             {/* NOTE: I am using the cropped image from your prompt as the source.
          Replace this src with your actual asset file.

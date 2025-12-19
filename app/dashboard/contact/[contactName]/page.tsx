@@ -91,7 +91,7 @@ const CustomTooltip = ({
               </span>
             </div>
             <span className="font-mono text-sm font-bold">
-              ${entry.value.toLocaleString()}
+              ${entry.value?.toLocaleString() ?? "0"}
             </span>
           </div>
         ))}

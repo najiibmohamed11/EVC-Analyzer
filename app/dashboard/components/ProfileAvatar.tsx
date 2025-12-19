@@ -72,15 +72,15 @@ const ProfileAvatar = ({
   };
 
   return (
-    <Avatar className={`${sizeClasses[size]} ring-2 ring-white/10 rounded-lg`}>
+    <Avatar className={`${sizeClasses[size]} rounded-lg ring-2 ring-white/10`}>
       {/* square shape -> rounded-lg instead of rounded-full */}
       <AvatarFallback
-        className="rounded-lg overflow-hidden"
+        className="overflow-hidden rounded-lg"
         style={getPattern()}
       >
         <img
           src={avatarUrl}
-          className="h-full w-full object-cover rounded-lg"
+          className="h-full w-full rounded-lg object-cover"
           alt=""
         />
       </AvatarFallback>

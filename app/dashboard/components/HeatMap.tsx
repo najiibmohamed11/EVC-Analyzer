@@ -68,7 +68,7 @@ function HeatMap({ transactions }: { transactions: transactionSchemaType }) {
   const daysInTheWeek = containers.slice(0, 7);
 
   return (
-    <div className="grid grid-cols-7 gap-1 ">
+    <div className="grid grid-cols-7 gap-1">
       {daysInTheWeek.map((day, index) => (
         <div key={index} className="h-5 text-center">
           {day.toLocaleDateString("en-us", { weekday: "short" })}
@@ -103,24 +103,24 @@ const HoverCardContentComponent = ({
   const formatedDate = date.toISOString().split("T")[0];
   const thidDateTransaction = transactionsMap.get(formatedDate);
   return (
-    <HoverCardContent className="p-4 rounded-xl shadow-md bg-white space-y-4">
-      <div className="flex justify-between items-center">
+    <HoverCardContent className="space-y-4 rounded-xl bg-white p-4 shadow-md">
+      <div className="flex items-center justify-between">
         <p className="flex items-center gap-2 text-sm text-gray-700">
-          <Calendar className="w-4 h-4" /> {date.toLocaleDateString()}
+          <Calendar className="h-4 w-4" /> {date.toLocaleDateString()}
         </p>
         <p className="flex items-center gap-2 text-sm font-semibold text-green-600">
-          <TrendingUp className="w-4 h-4" /> ${thidDateTransaction?.credit ?? 0}
+          <TrendingUp className="h-4 w-4" /> ${thidDateTransaction?.credit ?? 0}
         </p>
       </div>
 
-      <div className="flex justify-between items-center border-t pt-3">
+      <div className="flex items-center justify-between border-t pt-3">
         <p className="flex items-center gap-2 text-sm text-gray-700">
-          <ArrowLeftRight className="w-4 h-4" />{" "}
+          <ArrowLeftRight className="h-4 w-4" />{" "}
           {thidDateTransaction?.transactionCount ?? "no transaction"}{" "}
           transactions
         </p>
         <p className="flex items-center gap-2 text-sm font-semibold text-red-600">
-          <TrendingDown className="w-4 h-4" /> $
+          <TrendingDown className="h-4 w-4" /> $
           {thidDateTransaction?.debit ?? 0}
         </p>
       </div>

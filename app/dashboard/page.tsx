@@ -35,7 +35,7 @@ function page() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 p-4 md:p-8 font-sans">
+    <div className="min-h-screen bg-slate-50 p-4 font-sans md:p-8">
       <div className="mx-auto max-w-7xl">
         <DashboardHeader />
         <div className="flex justify-between">

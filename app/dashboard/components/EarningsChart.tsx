@@ -201,8 +201,8 @@ export function ChartBarMultiple({
   const lastweekTransactions = getLastWeekTransactions(transactions);
   const lastMonthTransactions = getLastMonthTransaction(transactions);
   return (
-    <div className="min-w-3xl ">
-      <div className="flex justify-between w-full items-center">
+    <div className="min-w-3xl">
+      <div className="flex w-full items-center justify-between">
         <Tabs
           defaultValue={chartType}
           onValueChange={(value) =>
@@ -214,7 +214,7 @@ export function ChartBarMultiple({
             <h1 className="text-2xl font-bold">
               {chartType === "Earnings" && "earnings"}
             </h1>
-            <div className="flex justify-center items-center flex-col">
+            <div className="flex flex-col items-center justify-center">
               <TabsList>
                 <TabsTrigger value="Earnings">Earnings</TabsTrigger>
                 <TabsTrigger value="Activity">Activity</TabsTrigger>
@@ -228,16 +228,16 @@ export function ChartBarMultiple({
                     setTransactionsDateType(value as "week" | "month")
                   }
                 >
-                  <TabsList className="bg-transparent p-0 gap-4">
+                  <TabsList className="gap-4 bg-transparent p-0">
                     <TabsTrigger
                       value="week"
-                      className="bg-transparent p-0 text-xs font-bold uppercase text-slate-400 data-[state=active]:bg-transparent data-[state=active]:text-slate-900 data-[state=active]:shadow-none data-[state=active]:underline data-[state=active]:decoration-2 data-[state=active]:underline-offset-4 data-[state=active]:decoration-slate-900"
+                      className="bg-transparent p-0 text-xs font-bold text-slate-400 uppercase data-[state=active]:bg-transparent data-[state=active]:text-slate-900 data-[state=active]:underline data-[state=active]:decoration-slate-900 data-[state=active]:decoration-2 data-[state=active]:underline-offset-4 data-[state=active]:shadow-none"
                     >
                       Week
                     </TabsTrigger>
                     <TabsTrigger
                       value="month"
-                      className="bg-transparent p-0 text-xs font-bold uppercase text-slate-400 data-[state=active]:bg-transparent data-[state=active]:text-slate-900 data-[state=active]:shadow-none  data-[state=active]:underline data-[state=active]:decoration-2 data-[state=active]:underline-offset-4 data-[state=active]:decoration-slate-900"
+                      className="bg-transparent p-0 text-xs font-bold text-slate-400 uppercase data-[state=active]:bg-transparent data-[state=active]:text-slate-900 data-[state=active]:underline data-[state=active]:decoration-slate-900 data-[state=active]:decoration-2 data-[state=active]:underline-offset-4 data-[state=active]:shadow-none"
                     >
                       Month
                     </TabsTrigger>
@@ -278,12 +278,12 @@ export function ChartBarMultiple({
             <Card>
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-lg font-bold">Active Days</CardTitle>
-                <div className="flex gap-2 justify-center items-center">
+                <div className="flex items-center justify-center gap-2">
                   <p>less</p>
-                  <div className="bg-[#f5f7fa] w-2 h-2"></div>
-                  <div className="bg-[#FFC0B8] w-2 h-2"></div>
-                  <div className="bg-[#FF6B58] w-2 h-2"></div>
-                  <div className="bg-[#FF462E] w-2 h-2"></div>
+                  <div className="h-2 w-2 bg-[#f5f7fa]"></div>
+                  <div className="h-2 w-2 bg-[#FFC0B8]"></div>
+                  <div className="h-2 w-2 bg-[#FF6B58]"></div>
+                  <div className="h-2 w-2 bg-[#FF462E]"></div>
                   <p>More</p>
                 </div>
               </CardHeader>

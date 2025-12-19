@@ -81,7 +81,7 @@ export function Contacts({ transactions }: ContactsProps) {
           <CardTitle>Top Contacts</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-sm text-slate-500 text-center py-8">
+          <p className="py-8 text-center text-sm text-slate-500">
             No contacts found
           </p>
         </CardContent>
@@ -102,25 +102,25 @@ export function Contacts({ transactions }: ContactsProps) {
           />
         </CardTitle>
       </CardHeader>
-      <CardContent className="min-h-96 ">
+      <CardContent className="min-h-96">
         <div className="space-y-3">
           {contacts.map((contact, index) => (
             <Link
               href={`/dashboard/contact/${contact.otherParty}`}
               key={contact.otherParty}
-              className="flex items-center gap-4 p-4 rounded-lg border border-slate-200 hover:border-slate-300 hover:bg-slate-50 cursor-pointer transition-all group"
+              className="group flex cursor-pointer items-center gap-4 rounded-lg border border-slate-200 p-4 transition-all hover:border-slate-300 hover:bg-slate-50"
             >
               <ProfileAvatar
                 id={contact.otherParty}
                 size="md"
                 pattern="rings"
               />
-              <div className="flex-1 min-w-0">
-                <p className="font-semibold text-slate-900 truncate flex gap-1">
+              <div className="min-w-0 flex-1">
+                <p className="flex gap-1 truncate font-semibold text-slate-900">
                   {contact.otherParty}
                   {index == 0 && <Crown className="text-orange-600" />}
                 </p>
-                <div className="flex items-center gap-4 mt-1">
+                <div className="mt-1 flex items-center gap-4">
                   <span className="text-xs text-slate-500">
                     {contact.numberOfTransactions}{" "}
                     {contact.numberOfTransactions === 1
@@ -129,11 +129,11 @@ export function Contacts({ transactions }: ContactsProps) {
                   </span>
                 </div>
               </div>
-              <div className="flex flex-col items-end flex-shrink-0">
+              <div className="flex flex-shrink-0 flex-col items-end">
                 {contact.net >= 0 ? (
                   <div className="flex items-center gap-1 text-green-600">
                     <ArrowUpRight className="h-4 w-4" />
-                    <span className="font-semibold text-sm">
+                    <span className="text-sm font-semibold">
                       $
                       {Math.abs(contact.net).toLocaleString("en-US", {
                         minimumFractionDigits: 2,
@@ -144,7 +144,7 @@ export function Contacts({ transactions }: ContactsProps) {
                 ) : (
                   <div className="flex items-center gap-1 text-red-600">
                     <ArrowDownRight className="h-4 w-4" />
-                    <span className="font-semibold text-sm">
+                    <span className="text-sm font-semibold">
                       $
                       {Math.abs(contact.net).toLocaleString("en-US", {
                         minimumFractionDigits: 2,
@@ -153,7 +153,7 @@ export function Contacts({ transactions }: ContactsProps) {
                     </span>
                   </div>
                 )}
-                <span className="text-xs text-slate-500 mt-1">Net</span>
+                <span className="mt-1 text-xs text-slate-500">Net</span>
               </div>
             </Link>
           ))}

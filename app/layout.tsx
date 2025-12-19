@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "v0 App",
-  description: "Created with v0",
+  title: "EVC Analyzer",
+  description: "Track and analyze your mobile money transactions",
 };
 
 export default function RootLayout({

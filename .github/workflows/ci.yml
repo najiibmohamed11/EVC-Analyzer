@@ -3,28 +3,36 @@ name: CI
 on:
   pull_request:
   push:
+    branches: ["main"]
 
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout the rep
+        uses: actions/checkout@v4
+      - name: setup
+        uses: ./.github/actions/setup
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10    
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: "pnpm"
-  
-      - name: Install deps
-        run: pnpm install
-
-      - name: Run ESLint
+      - name: Lint
         run: pnpm run lint
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the rep
+        uses: actions/checkout@v4
+      - name: setup
+        uses: ./.github/actions/setup
 
-      - name: Run Prettier check
-        run: pnpm exec prettier --check ./app
+      - name: Format
+        run: pnpm run format-check
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the rep
+        uses: actions/checkout@v4
+      - name: setup
+        uses: ./.github/actions/setup
+
+      - name: Typecheck
+        run: pnpm run type-check

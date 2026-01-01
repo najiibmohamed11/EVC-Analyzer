@@ -49,6 +49,13 @@ function UploadCard() {
             toast.error("Only PDF files are accepted")
             return;
         }
+        const vercelLimitSize=4
+        //converting bytes to MB
+        const fileSize=file.size/(1024*1024)
+        if(fileSize>=vercelLimitSize){
+          toast.error("too large file, you can't upload more then 5MB pdf")
+          return 
+        }
 
         try {
           const formData = new FormData()
